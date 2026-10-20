@@ -4,6 +4,24 @@ PoC du challenge KBC par **Les Perdus**. LifeFlow transforme les champs de compt
 
 **Le schéma fourni sert de contrat d’adaptation local. Ce dépôt n’est ni un connecteur KBC certifié ni une intégration à une API Kate.** Toutes les données de démonstration sont fictives ; aucun appel bancaire ou envoi à Kate n’est effectué.
 
+## LifeFlow 2.0
+
+Le chat existant utilise maintenant le même fournisseur Gemini que les
+recommandations lorsque Vertex est configuré. Il propose des objectifs et des
+informations à mémoriser, à confirmer explicitement avant enregistrement.
+Flutter ajoute **My Goals**, **My Subscriptions**, **My Information and
+Preferences**, les plans et scénarios calculés en Python, ainsi que les
+références vérifiées du catalogue KBC. Aucun achat, crédit, transfert ou
+abonnement n'est exécuté.
+
+Le [rapport LifeFlow 2.0](docs/lifeflow-2-delivery.md) détaille chaque exigence,
+les nouvelles tables et API, les tests, les limites externes et le parcours
+de démonstration. L'[audit initial](docs/lifeflow-2-audit.md) distingue les
+fonctionnalités préexistantes des ajouts.
+
+Les tables sont ajoutées au démarrage sans réinitialiser PostgreSQL. Après
+la reconstruction, recharger le navigateur avec Ctrl+F5.
+
 ## Lancer
 
 Sur le poste déjà préparé (Python portable dans `.tools/`, ignoré par Git) :
@@ -188,7 +206,7 @@ L’ancien `POST /transactions` reste un **outil de compatibilité pour fabrique
 existing banking analysis → minimal Prompt Builder → Vertex AI Gemini API →
 strict Pydantic validation → JSON response. Existing Kate previews, endpoints,
 database tables and banking controls remain compatible. This endpoint does
-not consume chat history, save generated results, or execute actions.
+not consume chat history or execute actions. LifeFlow 2.0 caches validated results per customer/context; conversational history is used only by the existing chat endpoint.
 
 ### Generated recommendation cards
 
@@ -217,7 +235,7 @@ paths/error types or fixed rejection reasons, never customer payloads.
 The only card action is `view_details` / **View details**, which expands local
 plain text. It does not send a chat message, navigate to a partner or execute a
 transaction. Existing banking confirmation/rejection controls remain below the
-cards. No new partner integrations or conversational AI have been added.
+cards. LifeFlow 2.0 adds Later, Dismiss and Not relevant decisions and connects the existing chat to the same Gemini provider. Partner execution remains unavailable.
 
 An authorized customer opening triggers one analysis request. Rebuilds and
 five-second snapshot polling do not regenerate recommendations. Changes to
@@ -225,7 +243,7 @@ signals, consent, profile, feedback or financial context clear old cards and
 invalidate pending responses; the user can explicitly refresh the updated
 analysis. Switching customers triggers one initial request for the new customer.
 Errors offer an explicit retry; missing consent, loading and empty results have
-their own states. Cards are only held in widget memory and are not persisted.
+their own states. Cards remain in widget memory during scrolling, and validated backend results are cached in PostgreSQL until relevant context changes.
 
 Run backend tests with `python -m pytest backend/tests -q`. From `frontend`,
 run `flutter test`, `flutter analyze` and `flutter build web`. Automated tests
@@ -348,8 +366,7 @@ is limited (`thinking_budget=512`) to leave room and time for the complete JSON 
 this limit, thinking could exhaust the previous 4,000-token allowance and
 produce truncated JSON. Other model overrides retain their default thinking
 configuration. ADC discovery/refresh is separate from the
-generation HTTP timeout. No chat session, tools or response persistence is
-configured by the application; Google Cloud processing/retention policies apply.
+generation HTTP timeout. The transport uses no SDK chat session or executable tools. LifeFlow 2.0 persists consented history, confirmed structured information, pending proposals and validated recommendation caches locally; Google Cloud processing/retention policies apply.
 
 Errors return sanitized messages: 401 invalid demo token, 403 missing customer
 consent/permissions, 404 unknown customer, 503 missing configuration/ADC,

@@ -134,3 +134,61 @@ class ChatMessage(Base):
     text: Mapped[str] = mapped_column(String(3000))
     proposal_id: Mapped[str | None] = mapped_column(String(80))
     as_of: Mapped[DateValue] = mapped_column(Date)
+
+
+# LifeFlow 2.0: additive tables; existing profile facts and chat stay authoritative.
+class LifeGoal(Base):
+    __tablename__ = "life_goals"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    customer_id: Mapped[int] = mapped_column(ForeignKey("customers.id"), index=True)
+    data: Mapped[dict] = mapped_column(JSON)
+    revision: Mapped[int] = mapped_column(default=1)
+    created_at: Mapped[str] = mapped_column(String(40))
+    updated_at: Mapped[str] = mapped_column(String(40))
+
+
+class LifeSettings(Base):
+    __tablename__ = "life_settings"
+    customer_id: Mapped[int] = mapped_column(ForeignKey("customers.id"), primary_key=True)
+    data: Mapped[dict] = mapped_column(JSON)
+
+
+class LifePlan(Base):
+    __tablename__ = "life_plans"
+    customer_id: Mapped[int] = mapped_column(ForeignKey("customers.id"), primary_key=True)
+    data: Mapped[dict] = mapped_column(JSON)
+
+
+class ChatProposal(Base):
+    __tablename__ = "chat_proposals"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    customer_id: Mapped[int] = mapped_column(ForeignKey("customers.id"), index=True)
+    data: Mapped[dict] = mapped_column(JSON)
+    status: Mapped[str] = mapped_column(String(20), default="pending")
+    created_at: Mapped[str] = mapped_column(String(40))
+
+
+class SubscriptionReview(Base):
+    __tablename__ = "subscription_reviews"
+    __table_args__ = (UniqueConstraint("customer_id", "key"),)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    customer_id: Mapped[int] = mapped_column(ForeignKey("customers.id"), index=True)
+    key: Mapped[str] = mapped_column(String(64))
+    data: Mapped[dict] = mapped_column(JSON)
+
+
+class RecommendationCache(Base):
+    __tablename__ = "recommendation_cache"
+    customer_id: Mapped[int] = mapped_column(ForeignKey("customers.id"), primary_key=True)
+    context_hash: Mapped[str] = mapped_column(String(64))
+    data: Mapped[dict] = mapped_column(JSON)
+    created_at: Mapped[str] = mapped_column(String(40))
+
+
+class LifeDecision(Base):
+    __tablename__ = "life_decisions"
+    __table_args__ = (UniqueConstraint("customer_id", "key"),)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    customer_id: Mapped[int] = mapped_column(ForeignKey("customers.id"), index=True)
+    key: Mapped[str] = mapped_column(String(100))
+    data: Mapped[dict] = mapped_column(JSON)

@@ -11,6 +11,10 @@ class AIModel(BaseModel):
     @field_validator("*")
     @classmethod
     def plain_text(cls, value):
+        if isinstance(value, list):
+            for item in value:
+                if isinstance(item, str):
+                    cls.plain_text(item)
         if isinstance(value, str) and re.search(r"<[^>]+>|\b[a-z][a-z0-9+.-]*://|www\.|javascript:|data:|mailto:", value, re.I):
             raise ValueError("Only plain text without links is allowed")
         return value
@@ -25,6 +29,7 @@ class Need(AIModel):
 
 
 class Recommendation(AIModel):
+    goal_id: int | None = None
     id: str = Field(min_length=1)
     title: str = Field(min_length=1, max_length=90)
     message: str = Field(min_length=1, max_length=280)

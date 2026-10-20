@@ -1,4 +1,5 @@
 """Situation-based proposals and local Kate chat preview, without external execution."""
+import os
 from sqlalchemy import select
 from ..models import ChatMessage
 
@@ -56,8 +57,10 @@ def chat_view(db, customer_id, profile, options):
     rows = list(db.scalars(select(ChatMessage).where(ChatMessage.customer_id == customer_id).order_by(ChatMessage.id.desc()).limit(100)))
     messages = [{"id": r.id, "role": r.role, "text": r.text, "proposal_id": r.proposal_id, "as_of": str(r.as_of)}
                 for r in reversed(rows) if r.proposal_id is None or r.proposal_id in allowed]
-    return {"mode": "local_preview", "blocked": False,
-            "intro": "Hello! Based on your current situation, here are some options we can explore." if options else "Hello! There are no situation-based proposals yet. You can ask about available options or simulate another month.",
+    gemini = bool(os.getenv("GOOGLE_CLOUD_PROJECT", "").strip())
+    return {"mode": "gemini" if gemini else "local_preview", "blocked": False,
+            "intro": "Tell me about a goal, a passion or a financial question. You decide what to remember." if gemini else
+                "Hello! Based on your current situation, here are some options we can explore." if options else "Hello! There are no situation-based proposals yet. You can ask about available options or simulate another month.",
             "messages": messages, "proposals": options}
 
 

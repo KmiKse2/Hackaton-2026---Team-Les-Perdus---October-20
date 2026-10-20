@@ -1,0 +1,203 @@
+[
+  {
+    "id": "kbc_myhome",
+    "name": "MyHome",
+    "provider": "KBC",
+    "ecosystem": "Housing",
+    "description": "Housing information and tools in KBC Mobile. Review your housing project and the next steps; no quote or application is submitted by LifeFlow.",
+    "supported_goal_categories": [
+      "housing",
+      "home_purchase",
+      "renovation",
+      "energy"
+    ],
+    "required_information": [
+      "housing objective"
+    ],
+    "verified_url": "https://www.kbc.be/particuliers/fr/thema/myhome.html",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "requires_customer_action": true,
+    "integration_status": "not_connected"
+  },
+  {
+    "id": "immoscoop",
+    "name": "Immoscoop",
+    "provider": "Immoscoop",
+    "ecosystem": "Housing",
+    "description": "Property search service described in KBC's MyHome information. Explore properties after clarifying your location and budget.",
+    "supported_goal_categories": [
+      "housing",
+      "home_purchase"
+    ],
+    "required_information": [
+      "location",
+      "budget"
+    ],
+    "verified_url": "https://www.kbc.be/particuliers/fr/thema/myhome.html",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "requires_customer_action": true,
+    "integration_status": "not_connected"
+  },
+  {
+    "id": "setle",
+    "name": "Setle",
+    "provider": "Setle",
+    "ecosystem": "Energy & Sustainability",
+    "description": "Renovation estimation service referenced by KBC MyHome. Estimates must be obtained from the service; LifeFlow has no price or subsidy data.",
+    "supported_goal_categories": [
+      "renovation",
+      "energy",
+      "housing"
+    ],
+    "required_information": [
+      "renovation scope"
+    ],
+    "verified_url": "https://www.kbc.be/particuliers/fr/thema/myhome.html",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "requires_customer_action": true,
+    "integration_status": "not_connected"
+  },
+  {
+    "id": "kbc_mymobility",
+    "name": "MyMobility",
+    "provider": "KBC",
+    "ecosystem": "Mobility",
+    "description": "Mobility dashboard in KBC Mobile with information about owning and using a vehicle. Compare mobility needs before deciding on a purchase.",
+    "supported_goal_categories": [
+      "mobility",
+      "car",
+      "buy_car"
+    ],
+    "required_information": [
+      "mobility needs"
+    ],
+    "verified_url": "https://www.kbc.be/particuliers/fr/themes/mymobility/produits/mymobility-dans-mobile.html",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "requires_customer_action": true,
+    "integration_status": "not_connected"
+  },
+  {
+    "id": "start_it_kbc",
+    "name": "Start it @KBC",
+    "provider": "Start it @KBC",
+    "ecosystem": "Business",
+    "description": "Startup accelerator offering coaching and a founder network. Application periods and selection must be checked with the programme.",
+    "supported_goal_categories": [
+      "business",
+      "entrepreneurship"
+    ],
+    "required_information": [
+      "business idea",
+      "development stage"
+    ],
+    "verified_url": "https://startit-x.com/en/accelerate/start-it-kbc",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "requires_customer_action": true,
+    "integration_status": "not_connected"
+  },
+  {
+    "id": "kbc_pension_information",
+    "name": "Pension saving information",
+    "provider": "KBC",
+    "ecosystem": "Pensions",
+    "description": "Official information on pension saving in KBC Mobile. Review existing arrangements and speak to an adviser; no suitability or return is inferred.",
+    "supported_goal_categories": [
+      "retirement",
+      "pension"
+    ],
+    "required_information": [
+      "retirement objectives",
+      "existing arrangements"
+    ],
+    "verified_url": "https://www.kbc.be/retail/en/products/payments/self-banking/on-your-smartphone/mobile/mobile-faq/savings.html",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "requires_customer_action": true,
+    "integration_status": "not_connected"
+  },
+  {
+    "id": "kbc_home_loan_information",
+    "name": "Home loan information",
+    "provider": "KBC",
+    "ecosystem": "Housing",
+    "description": "Official mortgage information. Discuss your own funding and repayment constraints with an adviser; no rate, eligibility or approval is supplied.",
+    "supported_goal_categories": [
+      "housing",
+      "home_purchase"
+    ],
+    "required_information": [
+      "own funding",
+      "repayment constraints"
+    ],
+    "verified_url": "https://www.kbc.be/retail/en/loans/home/mortgage-loan.html",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "requires_customer_action": true,
+    "integration_status": "not_connected"
+  },
+  {
+    "id": "kbc_investment_information",
+    "name": "Investment plan information",
+    "provider": "KBC",
+    "ecosystem": "Investing",
+    "description": "Official information on investment plans. Educational information only; suitability checks and professional advice are needed before any personalised investment decision.",
+    "supported_goal_categories": [
+      "investing",
+      "investment"
+    ],
+    "required_information": [
+      "goals",
+      "suitability assessment"
+    ],
+    "verified_url": "https://www.kbc.be/retail/en/investments/investment-plan.html",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "requires_customer_action": true,
+    "integration_status": "not_connected"
+  },
+  {
+    "id": "kbc_travel_cover_information",
+    "name": "Travel cover information",
+    "provider": "KBC",
+    "ecosystem": "Family & Protection",
+    "description": "Official travel insurance information. Check existing policies and card cover first; no quote or insurance purchase is connected.",
+    "supported_goal_categories": [
+      "travel",
+      "family"
+    ],
+    "required_information": [
+      "existing coverage",
+      "destination",
+      "dates"
+    ],
+    "verified_url": "https://www.kbc.be/particuliers/fr/assurer/famille/assurancevoyage.html",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "requires_customer_action": true,
+    "integration_status": "not_connected"
+  },
+  {
+    "id": "impact_us_today",
+    "name": "Impact Us Today",
+    "provider": "Impact Us Today",
+    "ecosystem": "Energy & Sustainability",
+    "description": "Renovation partner referenced in KBC housing information. Explore the service for a defined renovation project; pricing and availability must be checked with the provider.",
+    "supported_goal_categories": [
+      "energy",
+      "renovation"
+    ],
+    "required_information": [
+      "renovation scope"
+    ],
+    "verified_url": "https://www.kbc.com/content/dam/kbccom/doc/newsroom/pressreleases/2026/20260129%20MyHome_FR.pdf",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "requires_customer_action": true,
+    "integration_status": "not_connected"
+  }
+]

@@ -49,9 +49,11 @@ class RecommendationSection extends StatefulWidget {
     super.key,
     required this.snapshot,
     required this.load,
+    this.feedback,
   });
   final Map<String, dynamic> snapshot;
   final Future<Map<String, dynamic>> Function(int) load;
+  final Future<bool> Function(String id, String status)? feedback;
 
   @override
   State<RecommendationSection> createState() => _RecommendationSectionState();
@@ -89,12 +91,18 @@ class _RecommendationSectionState extends State<RecommendationSection>
           key: snapshot[key],
         'permissions': snapshot['consent']?['effective_permissions'],
         'accounts': snapshot['consent']?['account_ids'],
+        'goals': snapshot['life']?['goals'],
+        'preferences': snapshot['life']?['preferences'],
+        'information': snapshot['life']?['information'],
       });
 
   @override
   void initState() {
     super.initState();
-    if (_allowed) _generate();
+    if (_allowed &&
+        widget.snapshot['life']?['preferences']?['proactivity'] != 'off') {
+      _generate();
+    }
   }
 
   @override
@@ -195,8 +203,18 @@ class _RecommendationSectionState extends State<RecommendationSection>
             const Text(
                 'No recommendations for now. There is not enough relevant information to suggest a next step.'),
           if (_cards != null)
-            ..._cards!.map((card) =>
-                RecommendationCard(key: ValueKey(card['id']), card: card)),
+            ..._cards!.map((card) => RecommendationCard(
+                key: ValueKey(card['id']),
+                card: card,
+                feedback: widget.feedback == null
+                    ? null
+                    : (status) async {
+                        final ok = await widget.feedback!(card['id'], status);
+                        if (mounted && ok) {
+                          setState(() => _cards
+                              ?.removeWhere((c) => c['id'] == card['id']));
+                        }
+                      })),
           Align(
             alignment: Alignment.centerLeft,
             child: TextButton.icon(
@@ -214,8 +232,9 @@ class _RecommendationSectionState extends State<RecommendationSection>
 }
 
 class RecommendationCard extends StatefulWidget {
-  const RecommendationCard({super.key, required this.card});
+  const RecommendationCard({super.key, required this.card, this.feedback});
   final Map<String, dynamic> card;
+  final Future<void> Function(String status)? feedback;
 
   @override
   State<RecommendationCard> createState() => _RecommendationCardState();
@@ -223,6 +242,7 @@ class RecommendationCard extends StatefulWidget {
 
 class _RecommendationCardState extends State<RecommendationCard> {
   bool _details = false;
+  bool _saving = false;
 
   @override
   Widget build(BuildContext context) {
@@ -237,6 +257,9 @@ class _RecommendationCardState extends State<RecommendationCard> {
               style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           Text(card['message'] as String),
+          if (card['goal_id'] != null)
+            Text('Linked to your goal #${card['goal_id']}',
+                style: const TextStyle(fontSize: 12, color: Colors.blueGrey)),
           const SizedBox(height: 12),
           const Text('Why this may help',
               style: TextStyle(fontWeight: FontWeight.w600)),
@@ -267,6 +290,23 @@ class _RecommendationCardState extends State<RecommendationCard> {
               child: Text(_details ? 'Hide details' : 'View details'),
             ),
           ),
+          if (widget.feedback != null)
+            Wrap(spacing: 6, children: [
+              for (final choice in {
+                'postponed': 'Later',
+                'dismissed': 'Dismiss',
+                'rejected': 'Not relevant'
+              }.entries)
+                TextButton(
+                    onPressed: _saving
+                        ? null
+                        : () async {
+                            setState(() => _saving = true);
+                            await widget.feedback!(choice.key);
+                            if (mounted) setState(() => _saving = false);
+                          },
+                    child: Text(choice.value)),
+            ]),
         ]),
       ),
     );

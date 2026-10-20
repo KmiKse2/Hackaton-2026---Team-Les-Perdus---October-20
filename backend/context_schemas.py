@@ -22,6 +22,17 @@ class Fact(WireModel, Generic[T]):
 
 
 class ProfileAttributes(WireModel):
+    housing_status: Fact[str] | None = None
+    region: Fact[str] | None = None
+    personal_constraints: Fact[str] | None = None
+    hobbies: Fact[str] | None = None
+    passions: Fact[str] | None = None
+    interests: Fact[str] | None = None
+    ambitions: Fact[str] | None = None
+    life_priorities: Fact[str] | None = None
+    financial_constraints: Fact[str] | None = None
+    insurance_coverage: Fact[str] | None = None
+    retirement_preferences: Fact[str] | None = None
     date_of_birth: Fact[date] | None = None
     employment_status: Fact[Literal["student", "employed", "self_employed", "unemployed", "retired", "unknown"]] | None = None
     occupation: Fact[str] | None = None
@@ -35,6 +46,12 @@ class ProfileAttributes(WireModel):
 
     @model_validator(mode="after")
     def consistency(self):
+        for name in ("housing_status", "region", "personal_constraints", "hobbies", "passions",
+                     "interests", "ambitions", "life_priorities", "financial_constraints",
+                     "insurance_coverage", "retirement_preferences"):
+            fact = getattr(self, name)
+            if fact and not 1 <= len(fact.value.strip()) <= 500:
+                raise ValueError("Personal information must contain 1–500 characters")
         if self.date_of_birth and self.date_of_birth.value > self.date_of_birth.observed_at:
             raise ValueError("Date of birth is later than its collection date")
         if self.dependents_count and not 0 <= self.dependents_count.value <= 30:

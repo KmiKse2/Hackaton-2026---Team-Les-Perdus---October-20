@@ -1,4 +1,4 @@
-"""Stateless Vertex AI adapter using ADC. No chat or action execution."""
+"""Shared stateless Vertex AI transport using ADC. No action execution."""
 import json
 import os
 import hashlib
@@ -75,6 +75,8 @@ def validate_references(result, context):
         if recommendation.service_id is not None and recommendation.service_id not in services:
             raise ValueError("Unknown service")
         need = needs[recommendation.need_id]
+        if recommendation.goal_id is not None and recommendation.goal_id not in {g["id"] for g in context.get("goals", [])}:
+            raise ValueError("Unknown goal reference")
         if recommendation.category is not None and recommendation.category not in need.hypothesis_refs:
             raise ValueError("Unsupported category")
         evidence = set(need.signal_refs)
@@ -105,7 +107,7 @@ def prepare_cards(result, context):
     """Stable per-topic IDs independent of generated wording and response order."""
     signals = {s["id"]: s["type"] for s in context["signals"]}
     needs = {n.id: n for n in result.detected_needs}
-    replacements, seen = {}, set()
+    replacements, seen, kept = {}, set(), []
     for card in result.recommendations:
         if card.category is None and len(needs[card.need_id].hypothesis_refs) == 1:
             card.category = needs[card.need_id].hypothesis_refs[0]
@@ -114,20 +116,23 @@ def prepare_cards(result, context):
             # A hypothesis-backed topic survives changes in supporting evidence.
             "signals": [] if needs[card.need_id].hypothesis_refs else sorted({signals[s] for s in card.signal_refs}),
             "service": card.service_id,
+            "goal": card.goal_id,
         }
         stable_id = "rec_" + hashlib.sha256(json.dumps(topic, sort_keys=True).encode()).hexdigest()[:20]
-        if stable_id in seen:
-            raise ValueError("Duplicate recommendation topic")
-        seen.add(stable_id)
         replacements[card.id] = stable_id
+        if stable_id in seen:
+            continue
+        seen.add(stable_id)
         card.id = stable_id
+        kept.append(card)
     for action in result.suggested_actions:
         action.recommendation_id = replacements[action.recommendation_id]
+    result.recommendations = kept
     result.recommendations.sort(key=lambda r: (r.display_priority, r.id))
     return result
 
 
-def analyze_context(customer_id, context):
+def generate_structured(context, schema, output_model, instructions):
     project = os.getenv("GOOGLE_CLOUD_PROJECT", "").strip()
     location = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1").strip()
     model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
@@ -146,9 +151,9 @@ def analyze_context(customer_id, context):
                 model=model,
                 contents=json.dumps(context, ensure_ascii=False),
                 config=types.GenerateContentConfig(
-                    system_instruction=INSTRUCTIONS,
+                    system_instruction=instructions,
                     response_mime_type="application/json",
-                    response_json_schema=response_schema(context),
+                    response_json_schema=schema,
                     # Thinking shares the output allowance on Gemini 2.5 Flash.
                     # Bound it so it cannot consume the budget needed for JSON.
                     max_output_tokens=8192,
@@ -167,14 +172,7 @@ def analyze_context(customer_id, context):
             logger.warning("AI response incomplete: finish_reasons=%s",
                            [str(c.finish_reason) for c in response.candidates or []])
             raise ValueError("Incomplete or refused response")
-        result = AnalysisContent.model_validate_json(response.text)
-        try:
-            validate_references(result, context)
-            result = prepare_cards(result, context)
-        except ValueError as exc:
-            # These validators emit only fixed reason strings, never model text.
-            logger.warning("AI reference validation failed: %s", exc)
-            raise
+        result = output_model.model_validate_json(response.text)
     except httpx.TimeoutException:
         raise HTTPException(504, "AI analysis timed out") from None
     except GoogleAuthError:
@@ -194,5 +192,16 @@ def analyze_context(customer_id, context):
                        [(e["loc"], e["type"]) for e in exc.errors()])
         raise HTTPException(502, "AI provider returned an invalid analysis") from None
     except ValueError:
+        raise HTTPException(502, "AI provider returned an invalid analysis") from None
+    return result
+
+
+def analyze_context(customer_id, context):
+    result = generate_structured(context, response_schema(context), AnalysisContent, INSTRUCTIONS)
+    try:
+        validate_references(result, context)
+        result = prepare_cards(result, context)
+    except ValueError as exc:
+        logger.warning("AI reference validation failed: %s", exc)
         raise HTTPException(502, "AI provider returned an invalid analysis") from None
     return AIAnalysis(customer_id=customer_id, **result.model_dump())

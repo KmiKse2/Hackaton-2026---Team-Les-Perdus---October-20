@@ -43,6 +43,23 @@ def content():
     }
 
 
+def test_context_cache_feedback_and_consent(client, provider):
+    client.post("/api/customers/1/simulate")
+    provider[1].models.generate_content.return_value = gemini_response(content())
+    first = client.post("/api/customers/1/ai-analysis")
+    assert first.status_code == 200
+    assert client.post("/api/customers/1/ai-analysis").json() == first.json()
+    assert provider[1].models.generate_content.call_count == 1
+    rid = first.json()["recommendations"][0]["id"]
+    assert client.post(f"/api/customers/2/recommendations/{rid}/feedback", json={"status":"rejected"}).status_code == 404
+    client.post(f"/api/customers/1/recommendations/{rid}/feedback", json={"status":"rejected"})
+    assert client.post("/api/customers/1/ai-analysis").json()["recommendations"] == []
+    client.post("/api/customers/1/personalization-consent", json={"value":False,"source":"declared","observed_at":"2026-10-20"})
+    before = provider[1].models.generate_content.call_count
+    assert client.post("/api/customers/1/ai-analysis").status_code == 403
+    assert provider[1].models.generate_content.call_count == before
+
+
 @pytest.fixture(autouse=True)
 def adc(monkeypatch):
     monkeypatch.setenv("GOOGLE_CLOUD_PROJECT", "test-project")
@@ -360,7 +377,13 @@ def test_card_priority_and_duplicate_topics(client, provider):
     assert [r["display_priority"] for r in result.json()["recommendations"]] == [1, 2]
     other["service_id"] = "income_budget"
     provider[1].models.generate_content.return_value = gemini_response(data)
-    assert client.post("/api/customers/1/ai-analysis").status_code == 502
+    from backend.services.life import invalidate
+    with SessionLocal() as db:
+        invalidate(db, 1)
+        db.commit()
+    result = client.post("/api/customers/1/ai-analysis")
+    assert result.status_code == 200
+    assert len(result.json()["recommendations"]) == 1
 
 
 def test_rejected_hypothesis_cannot_be_recommended(client, provider):

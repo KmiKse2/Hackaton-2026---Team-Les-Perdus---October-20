@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'recommendations.dart';
+import 'life_panels.dart';
 
 void main() => runApp(const LifeFlowApp());
 
@@ -77,13 +78,24 @@ class _CustomerScreenState extends State<CustomerScreen> {
             ? _client.get(uri, headers: headers)
             : _client.post(uri,
                 headers: headers, body: body == null ? null : jsonEncode(body)))
-        .timeout(const Duration(seconds: 30));
+        .timeout(const Duration(seconds: 45));
     if (response.statusCode >= 400) {
       if (response.statusCode == 401) {
-        throw Exception('Demo token requis. Configurez DEMO_API_TOKEN.');
+        throw const RecommendationFailure(
+            'Please check your demo access token.');
       }
-      throw Exception(
-          'Le serveur ne peut pas traiter cette demande (${response.statusCode}).');
+      throw RecommendationFailure(switch (response.statusCode) {
+        502 ||
+        503 ||
+        504 =>
+          'The AI service is temporarily unavailable. Your confirmed information is safe; please try again.',
+        403 => 'This action requires valid consent and authorised access.',
+        409 =>
+          'Your information changed. Review the latest version before confirming.',
+        422 =>
+          'Please check the entered values and your shared savings limits.',
+        _ => 'Unable to complete this request. Please try again.',
+      });
     }
     return jsonDecode(utf8.decode(response.bodyBytes));
   }
@@ -98,6 +110,12 @@ class _CustomerScreenState extends State<CustomerScreen> {
       final previous = _state;
       try {
         final result = await _request('/customers/$id') as Map<String, dynamic>;
+        if (previous?['chat']?['last_response']?['ephemeral'] == true &&
+            result['chat']?['blocked'] == false &&
+            result['life']?['preferences']?['memory_enabled'] == false) {
+          result['chat']['messages'] = previous!['chat']['messages'];
+          result['chat']['last_response'] = previous['chat']['last_response'];
+        }
         if (mounted &&
             !_busy &&
             _selected == id &&
@@ -141,8 +159,9 @@ class _CustomerScreenState extends State<CustomerScreen> {
     }
   }
 
-  Future<void> _mutate(String suffix, {Map<String, dynamic>? body}) async {
-    if (_busy) return;
+  Future<bool> _mutate(String suffix, {Map<String, dynamic>? body}) async {
+    if (_busy) return false;
+    var success = false;
     setState(() {
       _busy = true;
       _error = null;
@@ -151,14 +170,17 @@ class _CustomerScreenState extends State<CustomerScreen> {
       final result = await _request('/customers/$_selected/$suffix',
           post: 'POST', body: body) as Map<String, dynamic>;
       if (mounted) setState(() => _state = result);
-    } catch (_) {
+      success = true;
+    } catch (error) {
       if (mounted) {
-        setState(() => _error =
-            'Unable to complete the action. Check your connection and try again.');
+        setState(() => _error = error is RecommendationFailure
+            ? error.message
+            : 'Unable to complete the action. Check your connection and try again.');
       }
     } finally {
       if (mounted) setState(() => _busy = false);
     }
+    return success;
   }
 
   String _money(dynamic value, [String currency = 'EUR']) => value == null
@@ -295,9 +317,13 @@ class _CustomerScreenState extends State<CustomerScreen> {
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Chat with Kate', style: Theme.of(context).textTheme.titleLarge),
+          Text('Chat with LifeFlow',
+              style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 6),
-          const Text('Local demo · no live quotes or orders',
+          Text(
+              chat['mode'] == 'gemini'
+                  ? 'Powered by Gemini - proposals need your confirmation'
+                  : 'Local Kate preview - AI provider not configured',
               style: TextStyle(fontSize: 11, color: Colors.blueGrey)),
           const SizedBox(height: 12),
           Text(
@@ -336,13 +362,71 @@ class _CustomerScreenState extends State<CustomerScreen> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(m['role'] == 'user' ? 'You' : 'Kate · demo',
+                      Text(m['role'] == 'user' ? 'You' : 'LifeFlow assistant',
                           style: const TextStyle(
                               fontSize: 10, color: Colors.blueGrey)),
                       const SizedBox(height: 5),
                       Text(m['text'] as String),
                     ]),
               )),
+          for (final proposal
+              in (_state?['life']?['pending_proposals'] as List? ?? []))
+            Card(
+                child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                              'Proposed information ? review before saving',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          for (final change in proposal['changes'] as List)
+                            Padding(
+                                padding: const EdgeInsets.only(top: 6),
+                                child: Text(change['kind'] == 'goal'
+                                    ? 'Goal: ${change['value']['title']}\nTarget: ${change['value']['target_amount'] ?? 'Not specified'} ${change['value']['currency']} ? ${change['value']['target_date'] ?? 'No date'}\n${change['value']['description']}'
+                                    : '${change['key'] ?? 'Financing preference'}: ${change['value']}')),
+                          Wrap(spacing: 8, children: [
+                            FilledButton(
+                                onPressed: _busy
+                                    ? null
+                                    : () => _mutate(
+                                        'proposals/${proposal['id']}/confirm',
+                                        body: {'accept': true}),
+                                child: const Text('Confirm and save')),
+                            TextButton(
+                                onPressed: _busy
+                                    ? null
+                                    : () => _mutate(
+                                        'proposals/${proposal['id']}/confirm',
+                                        body: {'accept': false}),
+                                child: const Text('Reject')),
+                          ]),
+                        ]))),
+          TextButton(
+              onPressed: _busy
+                  ? null
+                  : () async {
+                      final erase = await showDialog<bool>(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                  title:
+                                      const Text('Delete this conversation?'),
+                                  content: const Text(
+                                      'Confirmed goals and information are kept. Pending proposals are deleted.'),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, false),
+                                        child: const Text('Keep')),
+                                    TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, true),
+                                        child: const Text('Delete'))
+                                  ]));
+                      if (erase == true) await _mutate('chat/delete');
+                    },
+              child: const Text('Delete conversation')),
           const SizedBox(height: 12),
           TextField(
               controller: _chatInput,
@@ -352,7 +436,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
               maxLines: 3,
               decoration: const InputDecoration(
                   labelText: 'Your message',
-                  hintText: 'Ask about a suggested option…',
+                  hintText: 'Tell me about a goal or a passion',
                   border: OutlineInputBorder())),
           FilledButton(
               onPressed: blocked || _busy
@@ -538,6 +622,9 @@ class _CustomerScreenState extends State<CustomerScreen> {
                       key: ValueKey('recommendations-${customer['id']}'),
                       snapshot: _state!,
                       load: RecommendationApi(_client, baseUrl, token).analyze,
+                      feedback: (id, status) => _mutate(
+                          'recommendations/$id/feedback',
+                          body: {'status': status}),
                     ),
                     if (events.isNotEmpty)
                       const Padding(
@@ -547,6 +634,11 @@ class _CustomerScreenState extends State<CustomerScreen> {
                       ),
                     ...events.map(_insight),
                     _chat(),
+                    if (_state?['life'] != null)
+                      LifePanels(
+                          key: ValueKey('life-${customer['id']}'),
+                          data: Map<String, dynamic>.from(_state!['life']),
+                          mutate: (path, body) => _mutate(path, body: body)),
                     if (categories.isNotEmpty) ...[
                       const SizedBox(height: 16),
                       Text('Your profile',
@@ -635,7 +727,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                           ]),
                     const SizedBox(height: 24),
                     const Text(
-                        'Demo profiles · Local Kate preview\nNo connection to Kate. Not officially affiliated with KBC.',
+                        'Demo profiles - LifeFlow\nNo connection to the Kate API. Not officially affiliated with KBC.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 10, color: Colors.blueGrey, height: 1.7)),

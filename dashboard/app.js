@@ -78,6 +78,7 @@ function render() {
 
 function renderChat() {
   const chat = state.chat;
+  $('chat-mode').textContent = chat.mode === 'gemini' ? 'Powered by Gemini ? review proposed goals and memory in the Flutter application' : 'Local Kate preview ? no live quotes or orders';
   $('chat-intro').textContent = chat.blocked ? 'Personalisation is paused. Enable the required consent to see proposals.' : chat.intro;
   $('chat-proposals').innerHTML = chat.proposals.map((p) => `<button type="button" class="proposal" data-proposal="${escapeHtml(p.id)}"><strong>${escapeHtml(p.title)}</strong><span>${p.requires_confirmation ? 'If this situation applies to you: ' : ''}${escapeHtml(p.description)}</span></button>`).join('');
   $('chat-messages').innerHTML = chat.messages.map((m) => `<div class="chat-message ${m.role === 'user' ? 'user' : 'assistant'}"><small>${m.role === 'user' ? 'You' : 'Kate · demo'}</small><p>${escapeHtml(m.text)}</p></div>`).join('');

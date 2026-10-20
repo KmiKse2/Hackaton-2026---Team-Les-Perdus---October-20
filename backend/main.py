@@ -31,6 +31,9 @@ from .services.solutions import chat_view, proposals, reply
 from .ai_schemas import AIAnalysis
 from .services.ai_analysis import analyze_context
 from .services.prompt_builder import build_context
+from .life_schemas import GoalChange, Preferences, SubscriptionInput, DecisionInput, ConfirmProposal, ScenarioInput
+from .models import LifeGoal, LifePlan, LifeSettings, ChatProposal, SubscriptionReview, RecommendationCache, LifeDecision, CustomerContext
+from .services import life, conversation
 
 
 @asynccontextmanager
@@ -118,7 +121,14 @@ def snapshot(db, customer):
             "accounts": [{**{k: a.details.get(k) for k in ("resourceId", "name", "currency", "cashAccountType", "status", "usage")},
                           "name": {"Compte courant démo": "Demo current account", "Épargne démo": "Demo savings account"}.get(a.details.get("name"), a.details.get("name")),
                           "balances": [b.payload for b in balances if b.account_id == a.resource_id]} for a in accounts],
-            "customer_profile": profile, "kate_context": kate, "chat": chat, "simulation_timeline": timeline}
+            "customer_profile": profile, "kate_context": kate, "chat": chat, "simulation_timeline": timeline,
+            "life": life.life_view(db, customer.id, profile)}
+
+
+def committed_snapshot(db, customer):
+    result = snapshot(db, customer)
+    db.commit()  # Persist delivery bookkeeping from this completed response.
+    return result
 
 
 @app.get("/health")
@@ -142,17 +152,27 @@ def customer_profile(customer_id: int, db: Session = Depends(get_db)):
 def import_context(customer_id: int, payload: ContextImport, db: Session = Depends(get_db)):
     customer = customer_or_404(db, customer_id, lock=True)
     update_context(db, customer_id, payload)
+    life.invalidate(db, customer_id)
+    if payload.attributes is not None or "attributes" in payload.model_fields_set:
+        # Prevent removed/corrected facts from being resurrected from raw history.
+        db.execute(delete(ChatMessage).where(ChatMessage.customer_id == customer_id))
+        db.execute(delete(ChatProposal).where(ChatProposal.customer_id == customer_id))
     db.commit()
-    return snapshot(db, customer)
+    return committed_snapshot(db, customer)
 
 
 @app.post("/api/customers/{customer_id}/personalization-consent", dependencies=protected)
 def personalization_consent(customer_id: int, payload: PersonalizationConsent, db: Session = Depends(get_db)):
     customer = customer_or_404(db, customer_id, lock=True)
     update_personalization(db, customer_id, payload)
+    life.invalidate(db, customer_id)
+    # Raw messages can contain old bank context. Never reuse them after withdrawal.
+    if not payload.value:
+        db.execute(delete(ChatMessage).where(ChatMessage.customer_id == customer_id))
+        db.execute(delete(ChatProposal).where(ChatProposal.customer_id == customer_id))
     refresh_insights(db, customer_id)
     db.commit()
-    return snapshot(db, customer)
+    return committed_snapshot(db, customer)
 
 
 def save_category_response(db, customer_id, category, status):
@@ -180,7 +200,7 @@ def category_response(customer_id: int, category: str, payload: CategoryResponse
         if item:
             item.status = "confirmed" if payload.status == "confirmed" else "dismissed"
     db.commit()
-    return snapshot(db, customer)
+    return committed_snapshot(db, customer)
 
 
 @app.get("/api/customers", dependencies=protected)
@@ -190,7 +210,9 @@ def customers(db: Session = Depends(get_db)):
 
 @app.get("/api/customers/{customer_id}", dependencies=protected)
 def customer_state(customer_id: int, db: Session = Depends(get_db)):
-    return snapshot(db, customer_or_404(db, customer_id))
+    result = snapshot(db, customer_or_404(db, customer_id, lock=True))
+    db.commit()
+    return result
 
 
 @app.get("/api/customers/{customer_id}/transactions", dependencies=protected)
@@ -210,19 +232,51 @@ def kate_context(customer_id: int, db: Session = Depends(get_db)):
 
 
 @app.post("/api/customers/{customer_id}/ai-analysis", dependencies=protected, response_model=AIAnalysis)
-def ai_analysis(customer_id: int, db: Session = Depends(get_db)):
-    customer_or_404(db, customer_id)
+def ai_analysis(customer_id: int, automatic: bool = False, db: Session = Depends(get_db)):
+    customer_or_404(db, customer_id, lock=True)
     context = build_context(db, customer_id)
-    return analyze_context(customer_id, context)
+    prefs = life.settings(db, customer_id)
+    key = life.digest(context)
+    cached = db.get(RecommendationCache, customer_id)
+    empty = AIAnalysis(customer_id=customer_id, summary="No new recommendations for now.",
+                       detected_needs=[], recommendations=[], clarification_questions=[], suggested_actions=[])
+    if automatic and prefs.proactivity == "off":
+        return empty
+    if cached and cached.context_hash == key:
+        result = AIAnalysis.model_validate(cached.data)
+    else:
+        if automatic and cached:
+            from datetime import datetime, timezone
+            age = (datetime.now(timezone.utc) - datetime.fromisoformat(cached.created_at)).total_seconds()
+            if age < prefs.recommendation_interval_hours * 3600:
+                return empty
+        result = analyze_context(customer_id, context)
+        if cached is None:
+            cached = RecommendationCache(customer_id=customer_id)
+            db.add(cached)
+        cached.context_hash, cached.data, cached.created_at = key, result.model_dump(mode="json"), life.now()
+        db.commit()
+    recorded = life.decisions(db, customer_id)
+    result.recommendations = [r for r in result.recommendations if not life.suppressed(recorded.get(r.id, {}))
+        and (not prefs.allowed_categories or r.category in prefs.allowed_categories or
+             any(g["id"] == r.goal_id and g["category"] in prefs.allowed_categories for g in context["goals"]))
+        and r.category not in prefs.protected_categories
+        and not any(g["id"] == r.goal_id and g["category"] in prefs.protected_categories for g in context["goals"])]
+    ids = {r.id for r in result.recommendations}
+    result.suggested_actions = [a for a in result.suggested_actions if a.recommendation_id in ids]
+    return result
 
 
 @app.post("/api/customers/{customer_id}/consent", dependencies=protected)
 def update_consent(customer_id: int, payload: AccountAccess, db: Session = Depends(get_db)):
     customer = customer_or_404(db, customer_id, lock=True)
     set_consent(db, customer_id, payload)
+    life.invalidate(db, customer_id)
+    db.execute(delete(ChatMessage).where(ChatMessage.customer_id == customer_id))
+    db.execute(delete(ChatProposal).where(ChatProposal.customer_id == customer_id))
     refresh_insights(db, customer_id)
     db.commit()
-    return snapshot(db, customer)
+    return committed_snapshot(db, customer)
 
 
 @app.post("/api/customers/{customer_id}/banking", dependencies=protected)
@@ -231,7 +285,7 @@ def import_banking(customer_id: int, payload: BankingImport, automatic: bool = F
     store_import(db, customer_id, payload, automatic=automatic)
     refresh_insights(db, customer_id)
     db.commit()
-    return snapshot(db, customer)
+    return committed_snapshot(db, customer)
 
 
 @app.get("/api/accounts", dependencies=protected)
@@ -296,7 +350,7 @@ def simulate(customer_id: int, payload: SimulationRequest | None = None, db: Ses
                 "categories": [c["key"] for c in state["customer_profile"]["categories"] if c["status"] not in {"rejected", "expired"}]}))
             db.flush()
         db.commit()
-        return snapshot(db, customer)
+        return committed_snapshot(db, customer)
     if not customer.simulated:
         if customer_id not in SCENARIOS:
             raise HTTPException(404, "No demo scenario exists for this customer")
@@ -311,7 +365,7 @@ def simulate(customer_id: int, payload: SimulationRequest | None = None, db: Ses
         store_import(db, customer_id, fixture(db, customer, include_scenario=True))
         refresh_insights(db, customer_id)
         db.commit()
-    return snapshot(db, customer)
+    return committed_snapshot(db, customer)
 
 
 @app.post("/api/customers/{customer_id}/reset", dependencies=protected)
@@ -327,7 +381,7 @@ def reset(customer_id: int, db: Session = Depends(get_db)):
     customer.simulated = False
     refresh_insights(db, customer_id)
     db.commit()
-    return snapshot(db, customer)
+    return committed_snapshot(db, customer)
 
 
 class Feedback(BaseModel):
@@ -352,6 +406,16 @@ def chat_message(customer_id: int, payload: ChatRequest, db: Session = Depends(g
     message = payload.message.strip() or (option["title"] if option else "")
     if not message:
         raise HTTPException(422, "Enter a message or choose a proposal.")
+    if os.getenv("GOOGLE_CLOUD_PROJECT", "").strip():
+        answer = conversation.converse(db, customer_id, message)
+        db.commit()
+        result = committed_snapshot(db, customer)
+        result["chat"]["last_response"] = answer
+        if answer["ephemeral"]:
+            result["chat"]["messages"] = [
+                {"id": 0, "role": "user", "text": message, "proposal_id": None},
+                {"id": 1, "role": "assistant", "text": answer["displayed_text"], "proposal_id": None}]
+        return result
     proposal_id, answer = reply(message, payload.proposal_id, options)
     if proposal_id is None and not payload.proposal_id and state["chat"]["messages"]:
         previous_id = state["chat"]["messages"][-1]["proposal_id"]
@@ -362,7 +426,121 @@ def chat_message(customer_id: int, payload: ChatRequest, db: Session = Depends(g
     for role, text in (("user", message), ("assistant", answer)):
         db.add(ChatMessage(customer_id=customer_id, role=role, text=text, proposal_id=proposal_id, as_of=date.fromisoformat(state["analysis_date"])))
     db.commit()
-    return snapshot(db, customer)
+    return committed_snapshot(db, customer)
+
+
+@app.get("/api/customers/{customer_id}/life", dependencies=protected)
+def life_state(customer_id: int, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    state = snapshot(db, customer)
+    view = state["life"]
+    if not view["blocked"]:
+        view["notifications"] = life.notifications(db, customer_id, view["goals"], view["plan"],
+                                                   view["subscriptions"], state["customer_profile"])
+        db.commit()
+    return view
+
+
+@app.post("/api/customers/{customer_id}/goals", dependencies=protected)
+def create_goal(customer_id: int, payload: GoalChange, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    life.save_goal(db, customer_id, payload)
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/goals/{goal_id}", dependencies=protected)
+def edit_goal(customer_id: int, goal_id: int, payload: GoalChange, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    life.save_goal(db, customer_id, payload, goal_id)
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/goals/{goal_id}/delete", dependencies=protected)
+def delete_goal(customer_id: int, goal_id: int, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    db.delete(life.goal_row(db, customer_id, goal_id))
+    db.flush()
+    life.invalidate(db, customer_id)
+    life.persist_plan(db, customer_id)
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/preferences", dependencies=protected)
+def preferences(customer_id: int, payload: Preferences, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    life.save_settings(db, customer_id, payload)
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/plans/scenario", dependencies=protected)
+def simulate_plan(customer_id: int, payload: ScenarioInput, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    life.stress_scenario(db, customer_id, payload)
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/subscriptions/{key}", dependencies=protected)
+def review_subscription(customer_id: int, key: str, payload: SubscriptionInput, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    life.save_review(db, customer_id, key, payload)
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/proposals/{proposal_id}/confirm", dependencies=protected)
+def confirm_proposal(customer_id: int, proposal_id: int, payload: ConfirmProposal, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    conversation.confirm(db, customer_id, proposal_id, payload.accept)
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/recommendations/{key}/feedback", dependencies=protected)
+def recommendation_feedback(customer_id: int, key: str, payload: DecisionInput, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    life.require_life(db, customer_id)
+    cached = db.get(RecommendationCache, customer_id)
+    known = {r["id"] for r in cached.data["recommendations"]} if cached else set()
+    known |= life.decisions(db, customer_id).keys()
+    if key not in known:
+        raise HTTPException(404, "Recommendation not found")
+    life.save_decision(db, customer_id, key, payload)
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/memory/delete", dependencies=protected)
+def delete_memory(customer_id: int, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    life.erase_memory(db, customer_id)
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/chat/delete", dependencies=protected)
+def delete_conversation(customer_id: int, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    for model in (ChatMessage, ChatProposal):
+        db.execute(delete(model).where(model.customer_id == customer_id))
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/life/delete", dependencies=protected)
+def delete_life_data(customer_id: int, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    life.erase_memory(db, customer_id)
+    for model in (LifeGoal, LifeSettings, LifePlan, LifeDecision, SubscriptionReview):
+        db.execute(delete(model).where(model.customer_id == customer_id))
+    # Stop automatic reconstruction of personalised suggestions after erasure.
+    update_personalization(db, customer_id, PersonalizationConsent(value=False, source="declared", observed_at=today()))
+    db.commit()
+    return committed_snapshot(db, customer)
 
 
 @app.post("/api/customers/{customer_id}/insights/{insight_id}/feedback", dependencies=protected)
@@ -378,7 +556,7 @@ def feedback(customer_id: int, insight_id: int, payload: Feedback, db: Session =
     if category:
         save_category_response(db, customer_id, category, "confirmed" if payload.status == "confirmed" else "rejected")
     db.commit()
-    return snapshot(db, customer)
+    return committed_snapshot(db, customer)
 
 
 class NewTransaction(BaseModel):
@@ -407,7 +585,7 @@ def add_transaction(payload: NewTransaction, db: Session = Depends(get_db)):
     except IntegrityError:
         db.rollback()
         raise HTTPException(409, "Reference already in use for this customer")
-    return snapshot(db, customer)
+    return committed_snapshot(db, customer)
 
 
 dashboard = Path(__file__).resolve().parent.parent / "dashboard"

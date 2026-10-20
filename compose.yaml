@@ -24,6 +24,7 @@ services:
       GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:-}
       GOOGLE_CLOUD_LOCATION: ${GOOGLE_CLOUD_LOCATION:-us-central1}
       GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.5-flash}
+      LIFEFLOW_CATALOGUE_PATH: ${LIFEFLOW_CATALOGUE_PATH:-/app/backend/data/ecosystem.json}
       CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
     depends_on:
       db:
