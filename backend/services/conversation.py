@@ -23,6 +23,10 @@ savings for retirement; location/budget/time/deposit for housing; budget and tim
 for a race), never a generic questionnaire. A hobby alone is not a request for credit.
 Propose a goal only for a customer-declared ambition, with unknown values null.
 Use goal_id only to update a supplied goal. Preserve existing values unless corrected.
+Set related_goal_ids to the supplied active goals actually discussed in this turn,
+even when no goal update is needed. Leave it empty for unrelated conversation.
+For a project discussion, use its category as intent, not generic labels such as
+goal or planning. Do not create a goal update just to obtain service suggestions.
 Use concise standard categories where appropriate: housing, renovation, energy,
 mobility, retirement, savings, travel, education, business, family, hobby, debt,
 personal. Other categories are supported. Do not invent amounts or deadlines.
@@ -51,6 +55,10 @@ def converse(db, cid, message):
     valid_services = {s["id"] for s in context["services"] if s.get("verification_status") == "official_source"}
     schema = ConversationOutput.model_json_schema()
     ids = [g["id"] for g in context["goals"]]
+    if ids:
+        schema["properties"]["related_goal_ids"]["items"]["enum"] = ids
+    else:
+        schema["properties"]["related_goal_ids"]["maxItems"] = 0
     schema["$defs"]["GoalProposal"]["properties"]["goal_id"]["anyOf"] = (
         [{"type": "integer", "enum": ids}] if ids else []) + [{"type": "null"}]
     if valid_services:
@@ -64,6 +72,8 @@ def converse(db, cid, message):
     output = ai_analysis.generate_structured(context, schema, ConversationOutput, CHAT_INSTRUCTIONS)
     if not set(output.ecosystem_service_ids) <= valid_services:
         raise HTTPException(502, "AI returned an unknown service")
+    if not set(output.related_goal_ids) <= set(ids):
+        raise HTTPException(502, "AI returned an unknown goal")
     if not prefs.memory_enabled and (output.goal_updates or output.memory_updates or output.financing_preference):
         raise HTTPException(502, "AI proposed memory changes while memory is disabled")
     proposed = []

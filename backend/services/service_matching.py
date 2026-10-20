@@ -13,6 +13,8 @@ from .ecosystem import catalogue
 
 # Adapted event families from the ZIP, extended for LifeFlow's goal categories.
 ALIASES = {
+    "auto_insurance": "car_insurance", "vehicle_insurance": "car_insurance",
+    "assurance_auto": "car_insurance", "assurance_voiture": "car_insurance",
     "moving": "housing", "home_purchase": "housing", "buy_house": "housing",
     "buy_home": "housing", "house": "housing", "home": "housing",
     "home_renovation": "renovation", "renovating": "renovation",
@@ -26,6 +28,17 @@ ALIASES = {
 def intent(value):
     token = re.sub(r"[^a-z0-9]+", "_", str(value or "").lower()).strip("_")
     return ALIASES.get(token, token)
+
+
+def goal_category(goal, preferences):
+    category = intent(goal["category"])
+    # The manual form defaults to personal. Resolve only exact, explicit titles;
+    # never infer insurance from a generic vehicle purchase or free-text keywords.
+    if category == "personal" and "personal" not in preferences.protected_categories:
+        title = intent(goal.get("title"))
+        if title == "car_insurance":
+            return title
+    return category
 
 
 class MatchedService(ServiceRecord):
@@ -115,7 +128,7 @@ def enrich_analysis(analysis, context, recorded):
         goal = goals.get(card.goal_id)
         need = needs.get(card.need_id)
         topics = [card.category] if card.category else (need.hypothesis_refs if need else [])
-        category = goal["category"] if goal else (topics[0] if len(topics) == 1 else None)
+        category = goal_category(goal, prefs) if goal else (topics[0] if len(topics) == 1 else None)
         confirmed = bool(goal) or (not card.requires_confirmation and bool(topics)
                      and all(hypotheses.get(t, {}).get("status") == "confirmed" for t in topics))
         matches = match_services(category, prefs, confirmed=confirmed,
@@ -130,7 +143,7 @@ def goal_services(items, preferences, recorded=None, owned=()):
     for goal in items:
         if goal["status"] != "active":
             continue
-        for s in match_services(goal["category"], preferences, confirmed=True,
+        for s in match_services(goal_category(goal, preferences), preferences, confirmed=True,
                                 excluded=excluded_services(recorded or {}), owned=owned):
             found.setdefault(s.id, s.model_dump(mode="json"))
     return list(found.values())[:6]
@@ -141,11 +154,29 @@ def conversation_services(output, context, recorded):
     # Immediately honour a new restrictive preference; permissive changes await confirmation.
     if output.financing_preference == "saving":
         prefs.financing_preference = "saving"
-    categories = [g.category for g in output.goal_updates] or [output.intent]
+    active = {g["id"]: g for g in context.get("goals", []) if g["status"] == "active"}
+    categories = [(goal_category(active[gid], prefs), True) for gid in output.related_goal_ids if gid in active]
+    categories.extend((goal_category(g.model_dump(), prefs), False) for g in output.goal_updates)
+    if not categories:
+        categories = [(output.intent, False)]
+    supplied = {s["id"] for s in context.get("services", [])
+                if s.get("verification_status") == "official_source"}
+    selected = set(output.ecosystem_service_ids) & supplied
     found = {}
-    for category in categories:
-        for s in match_services(category, prefs, confirmed=False,
+    def matches(category, confirmed=False, preferred_id=None):
+        return match_services(category, prefs, confirmed=confirmed,
                 rejected=context.get("rejected_hypotheses", []), excluded=excluded_services(recorded),
-                owned=owned_services(context)):
+                owned=owned_services(context), preferred_id=preferred_id)
+    for category, confirmed in categories:
+        for s in matches(category, confirmed):
             found.setdefault(s.id, s.model_dump(mode="json"))
+    # A validated selected service remains useful when the model uses a generic
+    # intent and proposes no update. Resolve only that service, not its neighbours.
+    for record in catalogue():
+        if record["id"] not in selected:
+            continue
+        for category in record["supported_intents"]:
+            for s in matches(category, preferred_id=record["id"]):
+                if s.id == record["id"]:
+                    found.setdefault(s.id, s.model_dump(mode="json"))
     return list(found.values())[:3]

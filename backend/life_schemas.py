@@ -123,6 +123,7 @@ class GoalProposal(AIModel):
 
 
 class ConversationOutput(AIModel):
+    related_goal_ids: list[int] = Field(default_factory=list, max_length=3)
     message: str = Field(min_length=1, max_length=2200)
     intent: str = Field(min_length=1, max_length=80)
     clarification_questions: list[str] = Field(max_length=3)

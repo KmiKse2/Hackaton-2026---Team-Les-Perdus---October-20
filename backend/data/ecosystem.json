@@ -882,14 +882,14 @@
   {
     "id": "kbc-030",
     "name": "Car insurance",
-    "provider": "Provider not independently verified",
+    "provider": "KBC Insurance",
     "ecosystem": "Mobility",
-    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "description": "Official car insurance information. Review your existing cover and compare terms with the insurer; LifeFlow provides no quote, eligibility decision or purchase.",
     "supported_goal_categories": [
-      "mobility"
+      "car_insurance"
     ],
     "supported_intents": [
-      "mobility"
+      "car_insurance"
     ],
     "required_information": [],
     "source": "KBC_Ecosystems.xlsx",
@@ -900,7 +900,13 @@
         "ecosystem": "Mobility"
       }
     ],
-    "service_kind": "insurance"
+    "service_kind": "insurance",
+    "verified_url": "https://www.kbc.be/retail/en/insurance/vehicle/car-insurance.html",
+    "verification_status": "official_source",
+    "last_verified_at": "2026-10-20",
+    "destination_url": "https://www.kbc.be/retail/en/insurance/vehicle/car-insurance.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20"
   },
   {
     "id": "kbc-031",

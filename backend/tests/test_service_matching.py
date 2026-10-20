@@ -163,3 +163,63 @@ def test_unknown_preferred_service_never_authoritative():
     output.intent = "travel"
     result = conversation_services(output, {"preferences":Preferences().model_dump()}, {})
     assert result and all(s["requires_confirmation"] for s in result)
+
+
+def test_chat_followup_uses_goal_reference_without_mutation(client, monkeypatch):
+    gid = goal(client, category="housing").json()["life"]["goals"][0]["id"]
+    output = chat_response()
+    output.related_goal_ids = [gid]
+    mock_chat(monkeypatch, output)
+    r = client.post("/api/customers/1/chat", json={"message":"What can help with my existing home project?"})
+    assert r.status_code == 200, r.text
+    services = r.json()["chat"]["last_response"]["matched_services"]
+    assert services and all(s["matched_intent"] == "housing" for s in services)
+    assert all(not s["requires_confirmation"] for s in services)
+    assert not r.json()["life"]["pending_proposals"]
+    output.related_goal_ids = [999999]
+    assert client.post("/api/customers/1/chat", json={"message":"Continue"}).status_code == 502
+
+
+def test_chat_selected_service_survives_generic_intent_and_respects_dismissal():
+    output = chat_response()
+    output.ecosystem_service_ids = ["kbc_myhome"]
+    context = {"preferences": Preferences().model_dump(), "services": catalogue()}
+    matches = conversation_services(output, context, {})
+    assert [s["id"] for s in matches] == ["kbc_myhome"]
+    assert not conversation_services(output, context, {"service:kbc_myhome": {"status":"dismissed"}})
+    assert not conversation_services(output, dict(context, services=[]), {})
+    context["preferences"]["protected_categories"] = ["housing", "renovation", "energy"]
+    assert not conversation_services(output, context, {})
+
+
+def test_unrelated_chat_does_not_reuse_all_existing_goals():
+    output = chat_response()
+    output.intent = "greeting"
+    context = {"preferences":Preferences().model_dump(),
+               "goals":[{"id":1,"category":"housing","status":"active"}]}
+    assert not conversation_services(output, context, {})
+
+
+def test_explicit_car_insurance_goal_with_default_category(client):
+    r = client.post("/api/customers/1/goals", json={"title":"car insurance"})
+    assert r.status_code == 200, r.text
+    services = r.json()["life"]["services"]
+    assert [s["id"] for s in services] == ["kbc-030"]
+    assert services[0]["destination_available"]
+    assert r.json()["life"]["goals"][0]["category"] == "personal"
+    with SessionLocal() as db:
+        ctx = build_context(db, 1)
+    assert "kbc-030" in {s["id"] for s in ctx["services"]}
+    data = content()
+    data["recommendations"][0]["goal_id"] = r.json()["life"]["goals"][0]["id"]
+    enriched = enrich_analysis(AIAnalysis(customer_id=1, **data), ctx, {})
+    assert enriched.recommendations[0].matched_services[0].id == "kbc-030"
+
+
+def test_car_purchase_does_not_imply_insurance_and_no_keyword_guessing():
+    from backend.services.service_matching import goal_services
+    for title in ("buy a car", "do not offer car insurance", "review travel insurance"):
+        assert not goal_services([dict(id=1,title=title,category="personal",status="active")], Preferences())
+    assert "kbc-030" not in {s.id for s in match_services("mobility", Preferences(), confirmed=True)}
+    assert not match_services("car_insurance", Preferences(), confirmed=False)
+    assert not goal_services([dict(id=1,title="car insurance",category="personal",status="active")], Preferences(protected_categories=["personal"]))

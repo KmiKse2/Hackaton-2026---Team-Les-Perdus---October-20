@@ -21,8 +21,11 @@ Docker configuration are unchanged.
 
 ## Contract and matching
 
-The provider's existing `AnalysisContent`, `Recommendation` and
-`ConversationOutput` schemas stay unchanged. URLs never enter the model's output
+The provider's existing `AnalysisContent` and `Recommendation` schemas stay unchanged.
+`ConversationOutput` adds optional `related_goal_ids` (default empty), validated
+against the authorised active goals. Follow-up turns can therefore refer to an
+existing goal without proposing a mutation. Validated selected service IDs also
+resolve through the matcher when the model uses a generic intent. URLs never enter the model's output
 contract. After reference validation, the backend adds `matched_services` to each
 HTTP recommendation using `DisplayAnalysis` / `DisplayRecommendation`. Every
 original field remains present. Cached Gemini responses are enriched against
@@ -88,8 +91,8 @@ Protection rules:
 ## Catalogue and verified destinations
 
 There are 230 canonical records after merging the 229 workbook references with
-the 10 existing curated records (nine overlaps). Twelve have official source
-verification; eleven have a verified navigation destination. The other 218 are
+the 10 existing curated records (nine overlaps). Thirteen have official source
+verification; twelve have a verified navigation destination. The other 217 are
 workbook-only records, excluded from matching until reviewed. Source verification
 and navigation verification are separate fields.
 
@@ -218,3 +221,11 @@ no new credentials, service-account keys or partner API access are needed.
 
 External **website navigation works**; partner APIs, purchases, applications,
 quotes, eligibility decisions and live prices remain **unavailable**.
+
+
+Car insurance matching fix: an explicit `car insurance` (or exact supported
+French equivalent) goal title can resolve the manual form's default `personal`
+category for matching only; stored goals are not rewritten. Generic car purchases
+do not imply an insurance need. The workbook entry `kbc-030` now has an official
+verified destination: https://www.kbc.be/retail/en/insurance/vehicle/car-insurance.html
+(checked 2026-10-20). Confirmation, existing-cover and dismissal filters still apply.
