@@ -15,7 +15,7 @@ from backend.main import app
 from backend.models import Consent, CustomerContext
 from backend.services.prompt_builder import build_context
 from backend.services.prompt_builder import INSTRUCTIONS
-from backend.services.ai_analysis import prepare_cards, validate_references
+from backend.services.ai_analysis import prepare_cards, validate_references, response_schema
 
 
 @pytest.fixture
@@ -169,7 +169,7 @@ def test_success_and_sdk_arguments(client, provider, monkeypatch):
     args = sdk.models.generate_content.call_args.kwargs
     assert args["model"] == "configured-model"
     assert args["config"].response_mime_type == "application/json"
-    assert args["config"].response_json_schema == AnalysisContent.model_json_schema()
+    assert args["config"].response_json_schema == response_schema(json.loads(args["contents"]))
     assert args["config"].automatic_function_calling.disable is True
     assert args["config"].tools is None
     assert "customer_id" not in args["contents"]
@@ -381,3 +381,45 @@ def test_customer_friendly_prompt_and_separate_context(client, provider):
     assert context["hypotheses"] and context["signals"]
     assert context["verified_facts"] and context["services"]
     assert "instructions" not in context
+
+
+@pytest.mark.parametrize("model,budget", [("gemini-2.5-flash", 512), ("configured-model", None)])
+def test_thinking_leaves_room_for_complete_json(client, provider, monkeypatch, model, budget):
+    client.post("/api/customers/1/simulate")
+    monkeypatch.setenv("GEMINI_MODEL", model)
+    assert client.post("/api/customers/1/ai-analysis").status_code == 200
+    config = provider[1].models.generate_content.call_args.kwargs["config"]
+    assert config.max_output_tokens == 8192
+    if budget is None:
+        assert config.thinking_config is None
+    else:
+        assert config.thinking_config.thinking_budget == budget
+
+
+def test_provider_schema_limits_references_and_handles_empty_context():
+    context = {"signals": [{"id": "signal_1"}], "hypotheses": [{"id": "moving"}],
+               "services": [{"id": "moving_budget"}]}
+    definitions = response_schema(context)["$defs"]
+    assert definitions["Need"]["properties"]["signal_refs"]["items"]["enum"] == ["signal_1"]
+    assert definitions["Need"]["properties"]["hypothesis_refs"]["items"]["enum"] == ["moving"]
+    assert definitions["Recommendation"]["properties"]["service_id"]["anyOf"][0]["enum"] == ["moving_budget"]
+    assert definitions["Recommendation"]["properties"]["signal_refs"]["maxItems"] == 0
+    assert definitions["Recommendation"]["properties"]["category"]["anyOf"] == [{"type": "null"}]
+    assert definitions["Need"]["properties"]["requires_confirmation"]["enum"] == [True]
+    assert definitions["Recommendation"]["properties"]["clarification_question"]["type"] == "string"
+    empty = response_schema({"signals": [], "hypotheses": [], "services": []})["$defs"]
+    assert empty["Need"]["properties"]["hypothesis_refs"]["maxItems"] == 0
+    assert empty["Recommendation"]["properties"]["service_id"]["anyOf"] == [{"type": "null"}]
+
+
+def test_display_metadata_is_resolved_from_validated_need(client, provider):
+    client.post("/api/customers/1/simulate")
+    data = content()
+    data["recommendations"][0]["category"] = None
+    provider[1].models.generate_content.return_value = gemini_response(data)
+    response = client.post("/api/customers/1/ai-analysis")
+    assert response.status_code == 200
+    card = response.json()["recommendations"][0]
+    assert card["category"] == "first_job"
+    assert card["signal_refs"]
+    assert card["requires_confirmation"] is True

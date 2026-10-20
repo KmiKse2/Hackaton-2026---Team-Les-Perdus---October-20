@@ -2,6 +2,7 @@
 import json
 import os
 import hashlib
+import logging
 
 from fastapi import HTTPException
 import google.auth
@@ -14,6 +15,40 @@ from pydantic import ValidationError
 from ..ai_schemas import AIAnalysis, AnalysisContent
 from .prompt_builder import INSTRUCTIONS
 
+logger = logging.getLogger(__name__)
+
+
+def response_schema(context):
+    """Constrain provider references to the IDs actually supplied in this request."""
+    schema = AnalysisContent.model_json_schema()
+    signals = sorted(s["id"] for s in context["signals"])
+    hypotheses = sorted(h["id"] for h in context["hypotheses"])
+    services = sorted(s["id"] for s in context["services"])
+    definitions = schema["$defs"]
+    for model, field, values in (
+        ("Need", "signal_refs", signals),
+        ("Need", "hypothesis_refs", hypotheses),
+        ("Recommendation", "signal_refs", signals),
+    ):
+        target = definitions[model]["properties"][field]
+        if values:
+            target["items"]["enum"] = values
+        else:
+            target["maxItems"] = 0
+    for field, values in (("service_id", services), ("category", hypotheses)):
+        target = definitions["Recommendation"]["properties"][field]
+        target["anyOf"] = ([{"type": "string", "enum": values}] if values else []) + [{"type": "null"}]
+    # Mechanical display metadata is resolved locally from the validated need.
+    # Do not ask the model to repeat the same references consistently twice.
+    card_fields = definitions["Recommendation"]["properties"]
+    card_fields["signal_refs"]["maxItems"] = 0
+    card_fields["category"]["anyOf"] = [{"type": "null"}]
+    # Suggestions always request customer approval; this is conservative even
+    # when the underlying observation has already been confirmed.
+    for model in ("Need", "Recommendation"):
+        definitions[model]["properties"]["requires_confirmation"]["enum"] = [True]
+    card_fields["clarification_question"] = {"type": "string", "minLength": 1, "maxLength": 300}
+    return schema
 
 def validate_references(result, context):
     signals = {s["id"]: s for s in context["signals"]}
@@ -72,6 +107,8 @@ def prepare_cards(result, context):
     needs = {n.id: n for n in result.detected_needs}
     replacements, seen = {}, set()
     for card in result.recommendations:
+        if card.category is None and len(needs[card.need_id].hypothesis_refs) == 1:
+            card.category = needs[card.need_id].hypothesis_refs[0]
         topic = {
             "hypotheses": sorted(needs[card.need_id].hypothesis_refs),
             # A hypothesis-backed topic survives changes in supporting evidence.
@@ -111,8 +148,14 @@ def analyze_context(customer_id, context):
                 config=types.GenerateContentConfig(
                     system_instruction=INSTRUCTIONS,
                     response_mime_type="application/json",
-                    response_json_schema=AnalysisContent.model_json_schema(),
-                    max_output_tokens=4000,
+                    response_json_schema=response_schema(context),
+                    # Thinking shares the output allowance on Gemini 2.5 Flash.
+                    # Bound it so it cannot consume the budget needed for JSON.
+                    max_output_tokens=8192,
+                    thinking_config=(
+                        types.ThinkingConfig(thinking_budget=512)
+                        if model == "gemini-2.5-flash" else None
+                    ),
                     candidate_count=1,
                     automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
                 ),
@@ -121,10 +164,17 @@ def analyze_context(customer_id, context):
                 or response.candidates[0].finish_reason != types.FinishReason.STOP
                 or (response.prompt_feedback and response.prompt_feedback.block_reason)
                 or not response.text):
+            logger.warning("AI response incomplete: finish_reasons=%s",
+                           [str(c.finish_reason) for c in response.candidates or []])
             raise ValueError("Incomplete or refused response")
         result = AnalysisContent.model_validate_json(response.text)
-        validate_references(result, context)
-        result = prepare_cards(result, context)
+        try:
+            validate_references(result, context)
+            result = prepare_cards(result, context)
+        except ValueError as exc:
+            # These validators emit only fixed reason strings, never model text.
+            logger.warning("AI reference validation failed: %s", exc)
+            raise
     except httpx.TimeoutException:
         raise HTTPException(504, "AI analysis timed out") from None
     except GoogleAuthError:
@@ -139,6 +189,10 @@ def analyze_context(customer_id, context):
         raise HTTPException(502, "AI provider request failed") from None
     except httpx.TransportError:
         raise HTTPException(502, "AI provider request failed") from None
-    except (ValidationError, ValueError):
+    except ValidationError as exc:
+        logger.warning("AI schema validation failed: %s",
+                       [(e["loc"], e["type"]) for e in exc.errors()])
+        raise HTTPException(502, "AI provider returned an invalid analysis") from None
+    except ValueError:
         raise HTTPException(502, "AI provider returned an invalid analysis") from None
     return AIAnalysis(customer_id=customer_id, **result.model_dump())

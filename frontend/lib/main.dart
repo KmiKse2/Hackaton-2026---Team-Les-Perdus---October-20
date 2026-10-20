@@ -46,6 +46,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
   Map<String, dynamic>? _state;
   int _selected = 1;
   bool _busy = false;
+  bool _polling = false;
   String? _error;
   Timer? _poller;
   final TextEditingController _chatInput = TextEditingController();
@@ -90,6 +91,28 @@ class _CustomerScreenState extends State<CustomerScreen> {
   Future<void> _load(
       {bool initial = false, bool silent = false, int? customerId}) async {
     if (_busy) return;
+    if (silent) {
+      if (_polling) return;
+      _polling = true;
+      final id = _selected;
+      final previous = _state;
+      try {
+        final result = await _request('/customers/$id') as Map<String, dynamic>;
+        if (mounted &&
+            !_busy &&
+            _selected == id &&
+            identical(_state, previous) &&
+            jsonEncode(result) != jsonEncode(previous)) {
+          setState(() => _state = result);
+        }
+      } catch (_) {
+        // Keep the current screen during a transient background failure.
+        // Explicit refresh still reports connection errors.
+      } finally {
+        _polling = false;
+      }
+      return;
+    }
     setState(() {
       _busy = true;
       if (!silent) _error = null;
@@ -388,7 +411,12 @@ class _CustomerScreenState extends State<CustomerScreen> {
               child: RefreshIndicator(
                 onRefresh: () => _load(initial: _customers.isEmpty),
                 child: ListView(padding: const EdgeInsets.all(24), children: [
-                  if (_busy) const LinearProgressIndicator(minHeight: 2),
+                  SizedBox(
+                    height: 2,
+                    child: _busy
+                        ? const LinearProgressIndicator(minHeight: 2)
+                        : null,
+                  ),
                   if (_error != null)
                     Container(
                         margin: const EdgeInsets.symmetric(vertical: 12),
@@ -507,6 +535,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                         color: Colors.blueGrey, height: 1.6))
                               ])),
                     RecommendationSection(
+                      key: ValueKey('recommendations-${customer['id']}'),
                       snapshot: _state!,
                       load: RecommendationApi(_client, baseUrl, token).analyze,
                     ),

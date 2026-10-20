@@ -57,7 +57,11 @@ class RecommendationSection extends StatefulWidget {
   State<RecommendationSection> createState() => _RecommendationSectionState();
 }
 
-class _RecommendationSectionState extends State<RecommendationSection> {
+class _RecommendationSectionState extends State<RecommendationSection>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   List<Map<String, dynamic>>? _cards;
   bool _loading = false;
   String? _error;
@@ -162,6 +166,7 @@ class _RecommendationSectionState extends State<RecommendationSection> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

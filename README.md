@@ -12,17 +12,38 @@ Sur le poste déjà préparé (Python portable dans `.tools/`, ignoré par Git) 
 powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1
 ```
 
-Ou, avec Docker Desktop fonctionnel :
+Ou, pour lancer toute l'application avec Docker Desktop (conteneurs Linux) :
 
 ```powershell
 docker compose up --build -d
 ```
 
+- Frontend Flutter : http://localhost:8080
 - Tableau de bord : http://localhost:8000
 - Documentation des schémas et endpoints : http://localhost:8000/docs
 - Santé : http://localhost:8000/health
 
 Docker utilise PostgreSQL avec un volume persistant ; le mode Python local utilise SQLite par défaut. La configuration reste dans `.env.example`. La démo locale fonctionne sans authentification Google ; l’endpoint d’analyse Gemini nécessite Google Cloud ADC.
+
+Cette commande construit et démarre les trois services `db`, `api` et `frontend`.
+Le Dockerfile multi-stage du frontend compile Flutter Web 3.41.6 puis copie
+uniquement les fichiers compilés dans Nginx. Aucun SDK Flutter local n'est requis.
+Le premier build télécharge le SDK et les dépendances ; les suivants utilisent
+le cache Docker. Nginx sert l'application sur le port 8080 et transmet `/api/`
+au service `api:8000`, en conservant les chemins, paramètres et en-têtes.
+Le navigateur utilise ainsi la même origine, sans configuration CORS supplémentaire.
+Le frontend attend que l'API soit saine ; l'API attend PostgreSQL.
+
+Copiez `.env.example` vers `.env` si vous souhaitez personnaliser la configuration.
+Le jeton optionnel `DEMO_API_TOKEN` est aussi fourni à la compilation Flutter :
+il est visible dans le code du navigateur et reste un jeton de démonstration,
+pas un secret utilisateur. Après un changement de jeton ou de code, relancez
+`docker compose up --build -d`. Les identifiants Google ne sont jamais transmis
+au frontend ; pour Gemini dans Docker, suivez la section ADC ci-dessous.
+
+Vérification : `docker compose ps` et `docker compose logs --tail=50 frontend api`.
+Arrêt : `docker compose down` conserve le volume PostgreSQL ; ne rajoutez pas `-v`
+si vous souhaitez garder vos données. Les ports 8000 et 8080 doivent être libres.
 
 Sur un nouveau poste (Python 3.11+) :
 
@@ -32,7 +53,7 @@ py -m venv .venv
 .\.venv\Scripts\python.exe -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Flutter web, dans un autre terminal :
+Pour le développement sans Docker, Flutter web dans un autre terminal :
 
 ```powershell
 cd frontend
@@ -186,6 +207,12 @@ The backend assigns deterministic `rec_…` IDs from the topic and service rathe
 than trusting model-generated IDs, and updates suggested-action references.
 IDs are scoped to the customer's recommendations, not globally unique customer IDs.
 References and evidence are validated; HTML and URLs are rejected.
+The provider JSON schema restricts references to the supplied IDs. Gemini cites
+evidence on the need; the backend fills card signal references and an unambiguous
+category from that validated need. Generated suggestions conservatively request
+customer approval, including a question about preferences or next steps when the
+underlying event is already confirmed. Validation diagnostics log only field
+paths/error types or fixed rejection reasons, never customer payloads.
 
 The only card action is `view_details` / **View details**, which expands local
 plain text. It does not send a chat message, navigate to a partner or execute a
@@ -253,6 +280,20 @@ ADC file read-only and set `GOOGLE_APPLICATION_CREDENTIALS` to its container pat
 Do not bake credentials into the image. On Google Cloud, ADC can use an attached
 service identity with appropriate IAM permissions.
 
+On Windows, after installing Google Cloud CLI and completing the ADC login above,
+you can configure the local Docker mount automatically:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/enable-docker-adc.ps1
+```
+
+This script creates an ignored `compose.override.yaml` with a read-only mount of
+the existing ADC file and restarts Compose. It never copies credential contents
+or creates service account keys, and refuses to overwrite an existing override.
+Ensure `.env` contains the project variables from `.env.example`. Subsequent
+`docker compose up --build -d` commands automatically include this local override.
+Select **Retry recommendations** in Flutter after authentication is configured.
+
 ```powershell
 # After starting the backend with ADC and project configuration:
 Invoke-RestMethod -Method Post `
@@ -302,7 +343,11 @@ from the existing Pydantic model. Raw response text is validated again with that
 strict model and the existing reference checks. Only one candidate with a normal
 `STOP` finish is accepted; blocked, empty, truncated and malformed responses are
 rejected. Requests have a 30-second SDK HTTP timeout, one attempt (no automatic
-retries) and a 4,000 output-token cap. ADC discovery/refresh is separate from the
+retries) and an 8,192 output-token cap. For `gemini-2.5-flash`, internal thinking
+is limited (`thinking_budget=512`) to leave room and time for the complete JSON response; without
+this limit, thinking could exhaust the previous 4,000-token allowance and
+produce truncated JSON. Other model overrides retain their default thinking
+configuration. ADC discovery/refresh is separate from the
 generation HTTP timeout. No chat session, tools or response persistence is
 configured by the application; Google Cloud processing/retention policies apply.
 

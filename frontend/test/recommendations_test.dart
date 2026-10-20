@@ -51,6 +51,70 @@ Widget screen(Map<String, dynamic> state,
     )));
 
 void main() {
+  testWidgets('cards survive scrolling out of the list viewport',
+      (tester) async {
+    var requests = 0;
+    final controller = ScrollController();
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: ListView(
+          controller: controller,
+          children: [
+            RecommendationSection(
+              key: const ValueKey('recommendations-1'),
+              snapshot: snapshot(),
+              load: (id) async {
+                requests++;
+                return response();
+              },
+            ),
+            const SizedBox(height: 3000),
+          ],
+        ),
+      ),
+    ));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('View details'));
+    await tester.pumpAndSettle();
+    controller.jumpTo(2500);
+    await tester.pumpAndSettle();
+    controller.jumpTo(0);
+    await tester.pumpAndSettle();
+    expect(requests, 1);
+    expect(find.text('Review your budget'), findsOneWidget);
+    expect(find.text('Hide details'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+    controller.dispose();
+  });
+  testWidgets('poll loading row cannot recreate an in-flight AI panel',
+      (tester) async {
+    var requests = 0;
+    final pending = Completer<Map<String, dynamic>>();
+    Future<Map<String, dynamic>> load(int id) {
+      requests++;
+      return pending.future;
+    }
+
+    Widget parent(bool busy) => MaterialApp(
+            home: Scaffold(
+                body: ListView(children: [
+          if (busy) const LinearProgressIndicator(),
+          const Text('Customer overview'),
+          RecommendationSection(
+            key: const ValueKey('recommendations-1'),
+            snapshot: snapshot(),
+            load: load,
+          ),
+        ])));
+    await tester.pumpWidget(parent(false));
+    await tester.pumpWidget(parent(true));
+    await tester.pumpWidget(parent(false));
+    expect(requests, 1);
+    pending.complete(response());
+    await tester.pumpAndSettle();
+    expect(find.text('Review your budget'), findsOneWidget);
+    expect(requests, 1);
+  });
   testWidgets('loads once through API; plain cards and safe local details',
       (tester) async {
     var requests = 0;
