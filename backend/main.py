@@ -33,7 +33,7 @@ from .services.ai_analysis import analyze_context
 from .services.prompt_builder import build_context
 from .life_schemas import GoalChange, Preferences, SubscriptionInput, DecisionInput, ConfirmProposal, ScenarioInput
 from .models import LifeGoal, LifePlan, LifeSettings, ChatProposal, SubscriptionReview, RecommendationCache, LifeDecision, CustomerContext
-from .services import life, conversation
+from .services import life, conversation, service_matching
 
 
 @asynccontextmanager
@@ -231,7 +231,7 @@ def kate_context(customer_id: int, db: Session = Depends(get_db)):
     return snapshot(db, customer_or_404(db, customer_id))["kate_context"]
 
 
-@app.post("/api/customers/{customer_id}/ai-analysis", dependencies=protected, response_model=AIAnalysis)
+@app.post("/api/customers/{customer_id}/ai-analysis", dependencies=protected, response_model=service_matching.DisplayAnalysis)
 def ai_analysis(customer_id: int, automatic: bool = False, db: Session = Depends(get_db)):
     customer_or_404(db, customer_id, lock=True)
     context = build_context(db, customer_id)
@@ -264,7 +264,7 @@ def ai_analysis(customer_id: int, automatic: bool = False, db: Session = Depends
         and not any(g["id"] == r.goal_id and g["category"] in prefs.protected_categories for g in context["goals"])]
     ids = {r.id for r in result.recommendations}
     result.suggested_actions = [a for a in result.suggested_actions if a.recommendation_id in ids]
-    return result
+    return service_matching.enrich_analysis(result, context, recorded)
 
 
 @app.post("/api/customers/{customer_id}/consent", dependencies=protected)
@@ -510,6 +510,18 @@ def recommendation_feedback(customer_id: int, key: str, payload: DecisionInput, 
     if key not in known:
         raise HTTPException(404, "Recommendation not found")
     life.save_decision(db, customer_id, key, payload)
+    db.commit()
+    return committed_snapshot(db, customer)
+
+
+@app.post("/api/customers/{customer_id}/services/{service_id}/feedback", dependencies=protected)
+def service_feedback(customer_id: int, service_id: str, payload: DecisionInput, db: Session = Depends(get_db)):
+    customer = customer_or_404(db, customer_id, lock=True)
+    life.require_life(db, customer_id)
+    from .services.ecosystem import catalogue
+    if service_id not in {s["id"] for s in catalogue() if s["verification_status"] == "official_source"}:
+        raise HTTPException(404, "Service not found")
+    life.save_decision(db, customer_id, "service:" + service_id, payload)
     db.commit()
     return committed_snapshot(db, customer)
 

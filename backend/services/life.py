@@ -405,7 +405,10 @@ def life_view(db, cid, profile=None):
         plan["stress_scenario"] = saved.data["stress_scenario"]
     pending = [{"id": r.id, **r.data, "created_at": r.created_at} for r in
                db.scalars(select(ChatProposal).where(ChatProposal.customer_id == cid, ChatProposal.status == "pending"))] if allowed else []
-    from .ecosystem import relevant_services
+    from .service_matching import goal_services, excluded_services, owned_services
+    owned = owned_services({"verified_facts": [
+        dict((profile or {}).get("signals", {}).get("owned_kbc_products", {}), type="owned_kbc_products")
+    ]}) if allowed else set()
     subs = subscriptions(db, cid) if allowed else []
     estimates = []
     if allowed and profile:
@@ -422,7 +425,8 @@ def life_view(db, cid, profile=None):
             "coverage_checks": coverage_checks(prefs),
             "estimated_monthly_surplus": estimates,
             "information": (db.get(CustomerContext, cid).attributes if db.get(CustomerContext, cid) else {}),
-            "pending_proposals": pending, "services": relevant_services(items, prefs) if allowed else [],
+            "pending_proposals": pending, "services": goal_services(items, prefs, decisions(db, cid), owned) if allowed else [],
+            "dismissed_service_ids": sorted(excluded_services(decisions(db, cid))) if allowed else [],
             "subscriptions": subs,
             "notifications": notifications(db, cid, items, plan, subs, profile or {}) if allowed else [],
             "catalogue_note": "Official information only; no partner API or live offer is connected."}

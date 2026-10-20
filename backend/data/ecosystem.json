@@ -18,7 +18,24 @@
     "verification_status": "official_source",
     "last_verified_at": "2026-10-20",
     "requires_customer_action": true,
-    "integration_status": "not_connected"
+    "integration_status": "not_connected",
+    "supported_intents": [
+      "housing",
+      "home_purchase",
+      "renovation",
+      "energy"
+    ],
+    "source_records": [
+      {
+        "id": "kbc-010",
+        "name": "MyHome",
+        "ecosystem": "Housing"
+      }
+    ],
+    "destination_url": "https://www.kbc.be/particuliers/fr/thema/myhome.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20",
+    "source": "KBC_Ecosystems.xlsx; curated official information"
   },
   {
     "id": "immoscoop",
@@ -38,7 +55,22 @@
     "verification_status": "official_source",
     "last_verified_at": "2026-10-20",
     "requires_customer_action": true,
-    "integration_status": "not_connected"
+    "integration_status": "not_connected",
+    "supported_intents": [
+      "housing",
+      "home_purchase"
+    ],
+    "source_records": [
+      {
+        "id": "kbc-014",
+        "name": "Search for a home - Immoscoop",
+        "ecosystem": "Housing"
+      }
+    ],
+    "destination_url": "https://www.kbc.be/particuliers/fr/thema/myhome.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20",
+    "source": "KBC_Ecosystems.xlsx; curated official information"
   },
   {
     "id": "setle",
@@ -58,7 +90,22 @@
     "verification_status": "official_source",
     "last_verified_at": "2026-10-20",
     "requires_customer_action": true,
-    "integration_status": "not_connected"
+    "integration_status": "not_connected",
+    "supported_intents": [
+      "renovation",
+      "energy"
+    ],
+    "source_records": [
+      {
+        "id": "kbc-011",
+        "name": "Estimate renovation costs and grants - Setle",
+        "ecosystem": "Housing"
+      }
+    ],
+    "destination_url": "https://www.kbc.be/particuliers/fr/thema/myhome.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20",
+    "source": "KBC_Ecosystems.xlsx; curated official information"
   },
   {
     "id": "kbc_mymobility",
@@ -78,7 +125,23 @@
     "verification_status": "official_source",
     "last_verified_at": "2026-10-20",
     "requires_customer_action": true,
-    "integration_status": "not_connected"
+    "integration_status": "not_connected",
+    "supported_intents": [
+      "mobility",
+      "car",
+      "buy_car"
+    ],
+    "source_records": [
+      {
+        "id": "kbc-035",
+        "name": "MyMobility",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "destination_url": "https://www.kbc.be/particuliers/fr/themes/mymobility/produits/mymobility-dans-mobile.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20",
+    "source": "KBC_Ecosystems.xlsx; curated official information"
   },
   {
     "id": "start_it_kbc",
@@ -98,7 +161,22 @@
     "verification_status": "official_source",
     "last_verified_at": "2026-10-20",
     "requires_customer_action": true,
-    "integration_status": "not_connected"
+    "integration_status": "not_connected",
+    "supported_intents": [
+      "business",
+      "entrepreneurship"
+    ],
+    "source_records": [
+      {
+        "id": "kbc-106",
+        "name": "Start it @KBC",
+        "ecosystem": "Business"
+      }
+    ],
+    "destination_url": "https://startit-x.com/en/accelerate/start-it-kbc",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20",
+    "source": "KBC_Ecosystems.xlsx; curated official information"
   },
   {
     "id": "kbc_pension_information",
@@ -118,7 +196,15 @@
     "verification_status": "official_source",
     "last_verified_at": "2026-10-20",
     "requires_customer_action": true,
-    "integration_status": "not_connected"
+    "integration_status": "not_connected",
+    "supported_intents": [
+      "retirement",
+      "pension"
+    ],
+    "source_records": [],
+    "destination_url": "https://www.kbc.be/retail/en/products/payments/self-banking/on-your-smartphone/mobile/mobile-faq/savings.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20"
   },
   {
     "id": "kbc_home_loan_information",
@@ -138,7 +224,23 @@
     "verification_status": "official_source",
     "last_verified_at": "2026-10-20",
     "requires_customer_action": true,
-    "integration_status": "not_connected"
+    "integration_status": "not_connected",
+    "supported_intents": [
+      "housing",
+      "home_purchase"
+    ],
+    "source_records": [
+      {
+        "id": "kbc-001",
+        "name": "Home loan",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "credit",
+    "destination_url": "https://www.kbc.be/retail/en/loans/home/mortgage-loan.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20",
+    "source": "KBC_Ecosystems.xlsx; curated official information"
   },
   {
     "id": "kbc_investment_information",
@@ -158,7 +260,23 @@
     "verification_status": "official_source",
     "last_verified_at": "2026-10-20",
     "requires_customer_action": true,
-    "integration_status": "not_connected"
+    "integration_status": "not_connected",
+    "supported_intents": [
+      "investing",
+      "investment"
+    ],
+    "source_records": [
+      {
+        "id": "kbc-064",
+        "name": "KBC investment plan",
+        "ecosystem": "Investing"
+      }
+    ],
+    "service_kind": "investment",
+    "destination_url": "https://www.kbc.be/retail/en/investments/investment-plan.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20",
+    "source": "KBC_Ecosystems.xlsx; curated official information"
   },
   {
     "id": "kbc_travel_cover_information",
@@ -179,7 +297,22 @@
     "verification_status": "official_source",
     "last_verified_at": "2026-10-20",
     "requires_customer_action": true,
-    "integration_status": "not_connected"
+    "integration_status": "not_connected",
+    "supported_intents": [
+      "travel"
+    ],
+    "source_records": [
+      {
+        "id": "kbc-126",
+        "name": "Travel insurance",
+        "ecosystem": "Travel"
+      }
+    ],
+    "service_kind": "insurance",
+    "destination_url": "https://www.kbc.be/particuliers/fr/assurer/famille/assurancevoyage.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20",
+    "source": "KBC_Ecosystems.xlsx; curated official information"
   },
   {
     "id": "impact_us_today",
@@ -198,6 +331,4520 @@
     "verification_status": "official_source",
     "last_verified_at": "2026-10-20",
     "requires_customer_action": true,
-    "integration_status": "not_connected"
+    "integration_status": "not_connected",
+    "supported_intents": [
+      "energy",
+      "renovation"
+    ],
+    "source_records": [
+      {
+        "id": "kbc-012",
+        "name": "Quote for new windows - Impact us today",
+        "ecosystem": "Housing"
+      }
+    ],
+    "source": "KBC_Ecosystems.xlsx; curated official information"
+  },
+  {
+    "id": "kbc-002",
+    "name": "Bridging loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-002",
+        "name": "Bridging loan",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-003",
+    "name": "Renovation loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "energy",
+      "renovation"
+    ],
+    "supported_intents": [
+      "energy",
+      "renovation"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-003",
+        "name": "Renovation loan",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-004",
+    "name": "Home furnishing loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "housing"
+    ],
+    "supported_intents": [
+      "housing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-004",
+        "name": "Home furnishing loan",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-005",
+    "name": "Garden or terrace loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-005",
+        "name": "Garden or terrace loan",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-006",
+    "name": "Rental guarantee",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "housing"
+    ],
+    "supported_intents": [
+      "housing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-006",
+        "name": "Rental guarantee",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-007",
+    "name": "Home insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "family",
+      "housing"
+    ],
+    "supported_intents": [
+      "family",
+      "housing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-007",
+        "name": "Home insurance",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-008",
+    "name": "Home assistance insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "housing"
+    ],
+    "supported_intents": [
+      "housing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-008",
+        "name": "Home assistance insurance",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-009",
+    "name": "Outstanding balance insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-009",
+        "name": "Outstanding balance insurance",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-013",
+    "name": "Certificates and inspections - De Immowinkel",
+    "provider": "De Immowinkel",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-013",
+        "name": "Certificates and inspections - De Immowinkel",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-015",
+    "name": "Property valuation by an estate agent - Immoscoop",
+    "provider": "Immoscoop",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-015",
+        "name": "Property valuation by an estate agent - Immoscoop",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-016",
+    "name": "Indicative online property valuation",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-016",
+        "name": "Indicative online property valuation",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-017",
+    "name": "Calculate housing budget",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "housing"
+    ],
+    "supported_intents": [
+      "housing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-017",
+        "name": "Calculate housing budget",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-018",
+    "name": "Renovation loan for co-owners' associations",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "energy",
+      "renovation"
+    ],
+    "supported_intents": [
+      "energy",
+      "renovation"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-018",
+        "name": "Renovation loan for co-owners' associations",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-019",
+    "name": "Home Insurance API",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "family",
+      "housing"
+    ],
+    "supported_intents": [
+      "family",
+      "housing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-019",
+        "name": "Home Insurance API",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-020",
+    "name": "Home Insurance Widget",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "family",
+      "housing"
+    ],
+    "supported_intents": [
+      "family",
+      "housing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-020",
+        "name": "Home Insurance Widget",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-021",
+    "name": "Home Loan API",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "housing"
+    ],
+    "supported_intents": [
+      "housing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-021",
+        "name": "Home Loan API",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-022",
+    "name": "Home Loan Widget",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "housing"
+    ],
+    "supported_intents": [
+      "housing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-022",
+        "name": "Home Loan Widget",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-023",
+    "name": "Home Loans - Partner Hub",
+    "provider": "Partner Hub",
+    "ecosystem": "Housing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "housing"
+    ],
+    "supported_intents": [
+      "housing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-023",
+        "name": "Home Loans - Partner Hub",
+        "ecosystem": "Housing"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-024",
+    "name": "Petrol or diesel car loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "mobility"
+    ],
+    "supported_intents": [
+      "mobility"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-024",
+        "name": "Petrol or diesel car loan",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-025",
+    "name": "Plug-in hybrid car loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "mobility"
+    ],
+    "supported_intents": [
+      "mobility"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-025",
+        "name": "Plug-in hybrid car loan",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-026",
+    "name": "Electric car loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "mobility"
+    ],
+    "supported_intents": [
+      "mobility"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-026",
+        "name": "Electric car loan",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-027",
+    "name": "Bicycle, scooter or motorcycle loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "bicycle"
+    ],
+    "supported_intents": [
+      "bicycle"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-027",
+        "name": "Bicycle, scooter or motorcycle loan",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-028",
+    "name": "Camper, caravan, trailer or boat loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-028",
+        "name": "Camper, caravan, trailer or boat loan",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-029",
+    "name": "Car Loan Plus",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "mobility"
+    ],
+    "supported_intents": [
+      "mobility"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-029",
+        "name": "Car Loan Plus",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-030",
+    "name": "Car insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "mobility"
+    ],
+    "supported_intents": [
+      "mobility"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-030",
+        "name": "Car insurance",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-031",
+    "name": "Electric car insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "mobility"
+    ],
+    "supported_intents": [
+      "mobility"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-031",
+        "name": "Electric car insurance",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-032",
+    "name": "Bicycle insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "bicycle"
+    ],
+    "supported_intents": [
+      "bicycle"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-032",
+        "name": "Bicycle insurance",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-033",
+    "name": "Moped insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-033",
+        "name": "Moped insurance",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-034",
+    "name": "Motorcycle insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-034",
+        "name": "Motorcycle insurance",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-036",
+    "name": "Calculate monthly car costs",
+    "provider": "KBC",
+    "ecosystem": "Mobility",
+    "description": "Review monthly vehicle running costs using the official MyMobility information. Check assumptions before choosing a vehicle.",
+    "supported_goal_categories": [
+      "mobility",
+      "car"
+    ],
+    "supported_intents": [
+      "mobility",
+      "car"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-036",
+        "name": "Calculate monthly car costs",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "information",
+    "verification_status": "official_source",
+    "verified_url": "https://www.kbc.be/retail/en/thema/mymobility/product/monthly-car-expenses.html",
+    "last_verified_at": "2026-10-20",
+    "destination_url": "https://www.kbc.be/retail/en/thema/mymobility/product/monthly-car-expenses.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20"
+  },
+  {
+    "id": "kbc-037",
+    "name": "VAB vignettes and toll badge",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-037",
+        "name": "VAB vignettes and toll badge",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-038",
+    "name": "Pay for parking - 4411",
+    "provider": "4411",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-038",
+        "name": "Pay for parking - 4411",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-039",
+    "name": "Parking with number plate recognition - Q-Park",
+    "provider": "Q-Park",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-039",
+        "name": "Parking with number plate recognition - Q-Park",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-040",
+    "name": "Car sharing - Cambio",
+    "provider": "Cambio",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-040",
+        "name": "Car sharing - Cambio",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-041",
+    "name": "Bus and tram tickets - De Lijn",
+    "provider": "De Lijn",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-041",
+        "name": "Bus and tram tickets - De Lijn",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-042",
+    "name": "Train tickets - NMBS",
+    "provider": "NMBS",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-042",
+        "name": "Train tickets - NMBS",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-043",
+    "name": "Top up BRUPASS 10 - MIVB",
+    "provider": "MIVB",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-043",
+        "name": "Top up BRUPASS 10 - MIVB",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-044",
+    "name": "Shared bicycles - Mobit",
+    "provider": "Mobit",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "bicycle"
+    ],
+    "supported_intents": [
+      "bicycle"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-044",
+        "name": "Shared bicycles - Mobit",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-045",
+    "name": "Shared bicycles - Blue-bike",
+    "provider": "Blue-bike",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "bicycle"
+    ],
+    "supported_intents": [
+      "bicycle"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-045",
+        "name": "Shared bicycles - Blue-bike",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-046",
+    "name": "Shared bicycles - Velo Antwerpen",
+    "provider": "Velo Antwerpen",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "bicycle"
+    ],
+    "supported_intents": [
+      "bicycle"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-046",
+        "name": "Shared bicycles - Velo Antwerpen",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-047",
+    "name": "Manage a leased vehicle - MoveSmart and VAB",
+    "provider": "MoveSmart and VAB",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-047",
+        "name": "Manage a leased vehicle - MoveSmart and VAB",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-048",
+    "name": "Prepare for the driving test and book driving lessons",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-048",
+        "name": "Prepare for the driving test and book driving lessons",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-049",
+    "name": "Pay for fuel - Q8",
+    "provider": "Q8",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-049",
+        "name": "Pay for fuel - Q8",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-050",
+    "name": "Manage business mobility costs",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-050",
+        "name": "Manage business mobility costs",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-051",
+    "name": "VAB fuel and charging cards",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-051",
+        "name": "VAB fuel and charging cards",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-052",
+    "name": "KBC Employee Mobility - MoveSmart integration",
+    "provider": "MoveSmart integration",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-052",
+        "name": "KBC Employee Mobility - MoveSmart integration",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-053",
+    "name": "Car Insurance API",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "mobility"
+    ],
+    "supported_intents": [
+      "mobility"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-053",
+        "name": "Car Insurance API",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-054",
+    "name": "Car Insurance Widget",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Mobility",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "mobility"
+    ],
+    "supported_intents": [
+      "mobility"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-054",
+        "name": "Car Insurance Widget",
+        "ecosystem": "Mobility"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-055",
+    "name": "Pension savings fund",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Pensions",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "first_job"
+    ],
+    "supported_intents": [
+      "first_job"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-055",
+        "name": "Pension savings fund",
+        "ecosystem": "Pensions"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-056",
+    "name": "Pension savings insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Pensions",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "first_job"
+    ],
+    "supported_intents": [
+      "first_job"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-056",
+        "name": "Pension savings insurance",
+        "ecosystem": "Pensions"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-057",
+    "name": "Supplementary pension for the self-employed",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Pensions",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-057",
+        "name": "Supplementary pension for the self-employed",
+        "ecosystem": "Pensions"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-058",
+    "name": "Social supplementary pension for the self-employed",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Pensions",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-058",
+        "name": "Social supplementary pension for the self-employed",
+        "ecosystem": "Pensions"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-059",
+    "name": "Individual pension commitment",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Pensions",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-059",
+        "name": "Individual pension commitment",
+        "ecosystem": "Pensions"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-060",
+    "name": "Pension agreement for the self-employed",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Pensions",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-060",
+        "name": "Pension agreement for the self-employed",
+        "ecosystem": "Pensions"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-061",
+    "name": "Pension plans for medical professionals",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Pensions",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-061",
+        "name": "Pension plans for medical professionals",
+        "ecosystem": "Pensions"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-062",
+    "name": "KBC Team Benefit Plan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Pensions",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-062",
+        "name": "KBC Team Benefit Plan",
+        "ecosystem": "Pensions"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-063",
+    "name": "KBC Pension Fund Solutions",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Pensions",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-063",
+        "name": "KBC Pension Fund Solutions",
+        "ecosystem": "Pensions"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-065",
+    "name": "Invest spare change",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Investing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "savings"
+    ],
+    "supported_intents": [
+      "savings"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-065",
+        "name": "Invest spare change",
+        "ecosystem": "Investing"
+      }
+    ],
+    "service_kind": "investment"
+  },
+  {
+    "id": "kbc-066",
+    "name": "Investment funds",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Investing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "investing"
+    ],
+    "supported_intents": [
+      "investing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-066",
+        "name": "Investment funds",
+        "ecosystem": "Investing"
+      }
+    ],
+    "service_kind": "investment"
+  },
+  {
+    "id": "kbc-067",
+    "name": "Thematic investing",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Investing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-067",
+        "name": "Thematic investing",
+        "ecosystem": "Investing"
+      }
+    ],
+    "service_kind": "investment"
+  },
+  {
+    "id": "kbc-068",
+    "name": "Responsible investing",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Investing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "investing"
+    ],
+    "supported_intents": [
+      "investing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-068",
+        "name": "Responsible investing",
+        "ecosystem": "Investing"
+      }
+    ],
+    "service_kind": "investment"
+  },
+  {
+    "id": "kbc-069",
+    "name": "Managed investing",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Investing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "investing"
+    ],
+    "supported_intents": [
+      "investing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-069",
+        "name": "Managed investing",
+        "ecosystem": "Investing"
+      }
+    ],
+    "service_kind": "investment"
+  },
+  {
+    "id": "kbc-070",
+    "name": "Self-directed investing - Bolero",
+    "provider": "Bolero",
+    "ecosystem": "Investing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "investing"
+    ],
+    "supported_intents": [
+      "investing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-070",
+        "name": "Self-directed investing - Bolero",
+        "ecosystem": "Investing"
+      }
+    ],
+    "service_kind": "investment"
+  },
+  {
+    "id": "kbc-071",
+    "name": "Branch 23 investment insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Investing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-071",
+        "name": "Branch 23 investment insurance",
+        "ecosystem": "Investing"
+      }
+    ],
+    "service_kind": "investment"
+  },
+  {
+    "id": "kbc-072",
+    "name": "Portfolio management",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Investing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "investing"
+    ],
+    "supported_intents": [
+      "investing"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-072",
+        "name": "Portfolio management",
+        "ecosystem": "Investing"
+      }
+    ],
+    "service_kind": "investment"
+  },
+  {
+    "id": "kbc-073",
+    "name": "Savings accounts",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Savings",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "first_job",
+      "savings"
+    ],
+    "supported_intents": [
+      "first_job",
+      "savings"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-073",
+        "name": "Savings accounts",
+        "ecosystem": "Savings"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-074",
+    "name": "Save for someone else",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Savings",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "savings"
+    ],
+    "supported_intents": [
+      "savings"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-074",
+        "name": "Save for someone else",
+        "ecosystem": "Savings"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-075",
+    "name": "Branch 21 savings insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Savings",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-075",
+        "name": "Branch 21 savings insurance",
+        "ecosystem": "Savings"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-076",
+    "name": "Business term account",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Savings",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-076",
+        "name": "Business term account",
+        "ecosystem": "Savings"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-077",
+    "name": "KBC Term Deposit PRO",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Savings",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "savings"
+    ],
+    "supported_intents": [
+      "savings"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-077",
+        "name": "KBC Term Deposit PRO",
+        "ecosystem": "Savings"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-078",
+    "name": "KBC Business PRO Account",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "business"
+    ],
+    "supported_intents": [
+      "business"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-078",
+        "name": "KBC Business PRO Account",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-079",
+    "name": "KBC Business Debit Card",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-079",
+        "name": "KBC Business Debit Card",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-080",
+    "name": "KBC Business Credit Card",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-080",
+        "name": "KBC Business Credit Card",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-081",
+    "name": "KBC Mastercard Business Essential",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-081",
+        "name": "KBC Mastercard Business Essential",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-082",
+    "name": "KBC Mastercard Business Extra",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-082",
+        "name": "KBC Mastercard Business Extra",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-083",
+    "name": "KBC Business Prepaid Card",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-083",
+        "name": "KBC Business Prepaid Card",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-084",
+    "name": "Business multi-currency",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-084",
+        "name": "Business multi-currency",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-085",
+    "name": "E-invoicing - Billit",
+    "provider": "Billit",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "business"
+    ],
+    "supported_intents": [
+      "business"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-085",
+        "name": "E-invoicing - Billit",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-086",
+    "name": "Collect unpaid invoices - Go Solid",
+    "provider": "Go Solid",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-086",
+        "name": "Collect unpaid invoices - Go Solid",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-087",
+    "name": "Send an expense claim to your accountant",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-087",
+        "name": "Send an expense claim to your accountant",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-088",
+    "name": "Payment terminals",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-088",
+        "name": "Payment terminals",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-089",
+    "name": "KBC payment button",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-089",
+        "name": "KBC payment button",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-090",
+    "name": "KBC Paypage",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-090",
+        "name": "KBC Paypage",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-091",
+    "name": "Electronic invoicing - Soluz.io",
+    "provider": "Soluz.io",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-091",
+        "name": "Electronic invoicing - Soluz.io",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-092",
+    "name": "KBC Invoicing Services",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-092",
+        "name": "KBC Invoicing Services",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-093",
+    "name": "Machine-to-machine payment solutions",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-093",
+        "name": "Machine-to-machine payment solutions",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-094",
+    "name": "Cash pooling",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-094",
+        "name": "Cash pooling",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-095",
+    "name": "Business cash services",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-095",
+        "name": "Business cash services",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-096",
+    "name": "Factoring and accounts receivable management",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-096",
+        "name": "Factoring and accounts receivable management",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-097",
+    "name": "ComFin Touch",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-097",
+        "name": "ComFin Touch",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-098",
+    "name": "Investment loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "business"
+    ],
+    "supported_intents": [
+      "business"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-098",
+        "name": "Investment loan",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-099",
+    "name": "Business Budget Facility",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "business"
+    ],
+    "supported_intents": [
+      "business"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-099",
+        "name": "Business Budget Facility",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-100",
+    "name": "Current account advance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-100",
+        "name": "Current account advance",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-101",
+    "name": "Straight Loans",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-101",
+        "name": "Straight Loans",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-102",
+    "name": "Financing advance tax payments",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-102",
+        "name": "Financing advance tax payments",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-103",
+    "name": "Cash budget credit facility",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-103",
+        "name": "Cash budget credit facility",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-104",
+    "name": "Roll-Over Line of Credit",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-104",
+        "name": "Roll-Over Line of Credit",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-105",
+    "name": "B2B Asset Financing",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-105",
+        "name": "B2B Asset Financing",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-107",
+    "name": "KBC Innovation Banking",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-107",
+        "name": "KBC Innovation Banking",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-108",
+    "name": "Boostpack",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-108",
+        "name": "Boostpack",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-109",
+    "name": "Tax and legal advice for SMEs",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-109",
+        "name": "Tax and legal advice for SMEs",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-110",
+    "name": "Business transfer advice",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-110",
+        "name": "Business transfer advice",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-111",
+    "name": "Business valuation advice",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-111",
+        "name": "Business valuation advice",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-112",
+    "name": "Business property advice",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-112",
+        "name": "Business property advice",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-113",
+    "name": "Acquisition advice",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-113",
+        "name": "Acquisition advice",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-114",
+    "name": "Strategic advice through a relationship manager",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-114",
+        "name": "Strategic advice through a relationship manager",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-115",
+    "name": "Working capital forecasts",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "business"
+    ],
+    "supported_intents": [
+      "business"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-115",
+        "name": "Working capital forecasts",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-116",
+    "name": "Working capital sector comparison",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "business"
+    ],
+    "supported_intents": [
+      "business"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-116",
+        "name": "Working capital sector comparison",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-117",
+    "name": "Digital signatures and powers of attorney",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-117",
+        "name": "Digital signatures and powers of attorney",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-118",
+    "name": "Multi-bank account overview",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-118",
+        "name": "Multi-bank account overview",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-119",
+    "name": "B2B Asset Financing - Partner Hub",
+    "provider": "Partner Hub",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-119",
+        "name": "B2B Asset Financing - Partner Hub",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-120",
+    "name": "Business Account - Partner Hub",
+    "provider": "Partner Hub",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-120",
+        "name": "Business Account - Partner Hub",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-121",
+    "name": "Bancontact Pro In Store",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-121",
+        "name": "Bancontact Pro In Store",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-122",
+    "name": "Bancontact Pro Online",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-122",
+        "name": "Bancontact Pro Online",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-123",
+    "name": "Joyn for merchants",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-123",
+        "name": "Joyn for merchants",
+        "ecosystem": "Business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-124",
+    "name": "Airport Fast Lane and Lounge Pass - Brussels Airport",
+    "provider": "Brussels Airport",
+    "ecosystem": "Travel",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "travel"
+    ],
+    "supported_intents": [
+      "travel"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-124",
+        "name": "Airport Fast Lane and Lounge Pass - Brussels Airport",
+        "ecosystem": "Travel"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-125",
+    "name": "Travel eSIM - Firsty",
+    "provider": "Firsty",
+    "ecosystem": "Travel",
+    "description": "Read about the travel eSIM offered through KBC Mobile. Check destination coverage, device compatibility and current terms with the provider.",
+    "supported_goal_categories": [
+      "travel"
+    ],
+    "supported_intents": [
+      "travel"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-125",
+        "name": "Travel eSIM - Firsty",
+        "ecosystem": "Travel"
+      }
+    ],
+    "service_kind": "information",
+    "verification_status": "official_source",
+    "verified_url": "https://www.kbc.be/particulieren/nl/product/betalen/zelf-bankieren/met-je-smartphone/mobile/e-sim.html",
+    "last_verified_at": "2026-10-20",
+    "destination_url": "https://www.kbc.be/particulieren/nl/product/betalen/zelf-bankieren/met-je-smartphone/mobile/e-sim.html",
+    "destination_status": "verified",
+    "destination_verified_at": "2026-10-20"
+  },
+  {
+    "id": "kbc-127",
+    "name": "Energy loan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "energy",
+      "renovation"
+    ],
+    "supported_intents": [
+      "energy",
+      "renovation"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-127",
+        "name": "Energy loan",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-128",
+    "name": "Calculate solar panels and request a quote",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "energy",
+      "renovation"
+    ],
+    "supported_intents": [
+      "energy",
+      "renovation"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-128",
+        "name": "Calculate solar panels and request a quote",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-129",
+    "name": "Calculate a home battery and request a quote",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "energy",
+      "renovation"
+    ],
+    "supported_intents": [
+      "energy",
+      "renovation"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-129",
+        "name": "Calculate a home battery and request a quote",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-130",
+    "name": "Insulation quote - Impact us today",
+    "provider": "Impact us today",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "energy",
+      "renovation"
+    ],
+    "supported_intents": [
+      "energy",
+      "renovation"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-130",
+        "name": "Insulation quote - Impact us today",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-131",
+    "name": "Heating quote - Impact us today",
+    "provider": "Impact us today",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "energy",
+      "renovation"
+    ],
+    "supported_intents": [
+      "energy",
+      "renovation"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-131",
+        "name": "Heating quote - Impact us today",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-132",
+    "name": "Air-conditioning quote - Impact us today",
+    "provider": "Impact us today",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-132",
+        "name": "Air-conditioning quote - Impact us today",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-133",
+    "name": "Group purchase of electricity and gas",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "energy"
+    ],
+    "supported_intents": [
+      "energy"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-133",
+        "name": "Group purchase of electricity and gas",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-134",
+    "name": "Energy consumption and saving tips",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "energy",
+      "housing",
+      "renovation"
+    ],
+    "supported_intents": [
+      "energy",
+      "housing",
+      "renovation"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-134",
+        "name": "Energy consumption and saving tips",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-135",
+    "name": "ecoWise",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-135",
+        "name": "ecoWise",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-136",
+    "name": "Sustainability advice - Encon",
+    "provider": "Encon",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-136",
+        "name": "Sustainability advice - Encon",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-137",
+    "name": "Water resilience - Sweco",
+    "provider": "Sweco",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-137",
+        "name": "Water resilience - Sweco",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-138",
+    "name": "Kube ESG",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-138",
+        "name": "Kube ESG",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-139",
+    "name": "Business CO2 insights and sector comparison",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Energy and sustainability",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-139",
+        "name": "Business CO2 insights and sector comparison",
+        "ecosystem": "Energy and sustainability"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-140",
+    "name": "KBC Basic Account",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "first_job"
+    ],
+    "supported_intents": [
+      "first_job"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-140",
+        "name": "KBC Basic Account",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-141",
+    "name": "KBC Plus Account",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "first_job"
+    ],
+    "supported_intents": [
+      "first_job"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-141",
+        "name": "KBC Plus Account",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-142",
+    "name": "Joint account",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "family"
+    ],
+    "supported_intents": [
+      "family"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-142",
+        "name": "Joint account",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-143",
+    "name": "KBC Budget Facility",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-143",
+        "name": "KBC Budget Facility",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-144",
+    "name": "KBC Basic Banking Service",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-144",
+        "name": "KBC Basic Banking Service",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-145",
+    "name": "KBC Universal Banking Service",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-145",
+        "name": "KBC Universal Banking Service",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-146",
+    "name": "Debit cards",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "first_job"
+    ],
+    "supported_intents": [
+      "first_job"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-146",
+        "name": "Debit cards",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-147",
+    "name": "Credit cards",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "travel"
+    ],
+    "supported_intents": [
+      "travel"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-147",
+        "name": "Credit cards",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-148",
+    "name": "Cash services",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-148",
+        "name": "Cash services",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-149",
+    "name": "Instalment repayment of credit card balance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-149",
+        "name": "Instalment repayment of credit card balance",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-150",
+    "name": "Loans for personal expenses, studies or holidays",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "travel"
+    ],
+    "supported_intents": [
+      "travel"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-150",
+        "name": "Loans for personal expenses, studies or holidays",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-151",
+    "name": "Apple Pay",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-151",
+        "name": "Apple Pay",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-152",
+    "name": "Wero",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-152",
+        "name": "Wero",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-153",
+    "name": "PayPal account overview",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-153",
+        "name": "PayPal account overview",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-154",
+    "name": "Split group expenses",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-154",
+        "name": "Split group expenses",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-155",
+    "name": "Kate Wallet",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Everyday banking and payments",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-155",
+        "name": "Kate Wallet",
+        "ecosystem": "Everyday banking and payments"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-156",
+    "name": "Family insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Family and protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "family"
+    ],
+    "supported_intents": [
+      "family"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-156",
+        "name": "Family insurance",
+        "ecosystem": "Family and protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-157",
+    "name": "Accident insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Family and protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "health"
+    ],
+    "supported_intents": [
+      "health"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-157",
+        "name": "Accident insurance",
+        "ecosystem": "Family and protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-158",
+    "name": "Life insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Family and protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "family"
+    ],
+    "supported_intents": [
+      "family"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-158",
+        "name": "Life insurance",
+        "ecosystem": "Family and protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-159",
+    "name": "Funeral insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Family and protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-159",
+        "name": "Funeral insurance",
+        "ecosystem": "Family and protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-160",
+    "name": "Service vouchers",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Family and protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-160",
+        "name": "Service vouchers",
+        "ecosystem": "Family and protection"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-161",
+    "name": "Accident insurance for assisting family members",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Family and protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "health"
+    ],
+    "supported_intents": [
+      "health"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-161",
+        "name": "Accident insurance for assisting family members",
+        "ecosystem": "Family and protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-162",
+    "name": "Hospitalisation insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Health and wellbeing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "family",
+      "health"
+    ],
+    "supported_intents": [
+      "family",
+      "health"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-162",
+        "name": "Hospitalisation insurance",
+        "ecosystem": "Health and wellbeing"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-163",
+    "name": "View medical records - Helena",
+    "provider": "Helena",
+    "ecosystem": "Health and wellbeing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "health"
+    ],
+    "supported_intents": [
+      "health"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-163",
+        "name": "View medical records - Helena",
+        "ecosystem": "Health and wellbeing"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-164",
+    "name": "KBC Hospital Care",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Health and wellbeing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "health"
+    ],
+    "supported_intents": [
+      "health"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-164",
+        "name": "KBC Hospital Care",
+        "ecosystem": "Health and wellbeing"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-165",
+    "name": "Leadlife Plus",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Health and wellbeing",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-165",
+        "name": "Leadlife Plus",
+        "ecosystem": "Health and wellbeing"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-166",
+    "name": "Private banker advice",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Wealth and estate planning",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-166",
+        "name": "Private banker advice",
+        "ecosystem": "Wealth and estate planning"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-167",
+    "name": "Private Plan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Wealth and estate planning",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-167",
+        "name": "Private Plan",
+        "ecosystem": "Wealth and estate planning"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-168",
+    "name": "Inheritance Planning Service",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Wealth and estate planning",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-168",
+        "name": "Inheritance Planning Service",
+        "ecosystem": "Wealth and estate planning"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-169",
+    "name": "Real Estate Service",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Wealth and estate planning",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-169",
+        "name": "Real Estate Service",
+        "ecosystem": "Wealth and estate planning"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-170",
+    "name": "Find flexible workers - NOWJOBS",
+    "provider": "NOWJOBS",
+    "ecosystem": "Work and employees",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-170",
+        "name": "Find flexible workers - NOWJOBS",
+        "ecosystem": "Work and employees"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-171",
+    "name": "Human Capital Solutions",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Work and employees",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-171",
+        "name": "Human Capital Solutions",
+        "ecosystem": "Work and employees"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-172",
+    "name": "KBC Employee Care",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Work and employees",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-172",
+        "name": "KBC Employee Care",
+        "ecosystem": "Work and employees"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-173",
+    "name": "KBC Team Protect Plan",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Work and employees",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-173",
+        "name": "KBC Team Protect Plan",
+        "ecosystem": "Work and employees"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-174",
+    "name": "Occupational accident insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Work and employees",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "health"
+    ],
+    "supported_intents": [
+      "health"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-174",
+        "name": "Occupational accident insurance",
+        "ecosystem": "Work and employees"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-175",
+    "name": "Share option and warrant plans",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Work and employees",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-175",
+        "name": "Share option and warrant plans",
+        "ecosystem": "Work and employees"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-176",
+    "name": "Documentary collection for imports",
+    "provider": "Provider not independently verified",
+    "ecosystem": "International business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-176",
+        "name": "Documentary collection for imports",
+        "ecosystem": "International business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-177",
+    "name": "Documentary collection for exports",
+    "provider": "Provider not independently verified",
+    "ecosystem": "International business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-177",
+        "name": "Documentary collection for exports",
+        "ecosystem": "International business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-178",
+    "name": "Documentary credit for imports",
+    "provider": "Provider not independently verified",
+    "ecosystem": "International business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-178",
+        "name": "Documentary credit for imports",
+        "ecosystem": "International business"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-179",
+    "name": "Documentary credit for exports",
+    "provider": "Provider not independently verified",
+    "ecosystem": "International business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-179",
+        "name": "Documentary credit for exports",
+        "ecosystem": "International business"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-180",
+    "name": "International bank guarantees",
+    "provider": "Provider not independently verified",
+    "ecosystem": "International business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-180",
+        "name": "International bank guarantees",
+        "ecosystem": "International business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-181",
+    "name": "KBC Flexims",
+    "provider": "Provider not independently verified",
+    "ecosystem": "International business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-181",
+        "name": "KBC Flexims",
+        "ecosystem": "International business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-182",
+    "name": "Avalised bill of exchange",
+    "provider": "Provider not independently verified",
+    "ecosystem": "International business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-182",
+        "name": "Avalised bill of exchange",
+        "ecosystem": "International business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-183",
+    "name": "Import forfaiting",
+    "provider": "Provider not independently verified",
+    "ecosystem": "International business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-183",
+        "name": "Import forfaiting",
+        "ecosystem": "International business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-184",
+    "name": "Hedge foreign exchange and interest rate risk",
+    "provider": "Provider not independently verified",
+    "ecosystem": "International business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "travel"
+    ],
+    "supported_intents": [
+      "travel"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-184",
+        "name": "Hedge foreign exchange and interest rate risk",
+        "ecosystem": "International business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-185",
+    "name": "Go&Deal Pro",
+    "provider": "Provider not independently verified",
+    "ecosystem": "International business",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-185",
+        "name": "Go&Deal Pro",
+        "ecosystem": "International business"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-186",
+    "name": "Business liability insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "business"
+    ],
+    "supported_intents": [
+      "business"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-186",
+        "name": "Business liability insurance",
+        "ecosystem": "Business protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-187",
+    "name": "Professional liability insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-187",
+        "name": "Professional liability insurance",
+        "ecosystem": "Business protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-188",
+    "name": "Medical professional liability insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-188",
+        "name": "Medical professional liability insurance",
+        "ecosystem": "Business protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-189",
+    "name": "Directors' liability insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-189",
+        "name": "Directors' liability insurance",
+        "ecosystem": "Business protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-190",
+    "name": "Business legal assistance insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-190",
+        "name": "Business legal assistance insurance",
+        "ecosystem": "Business protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-191",
+    "name": "Ten-year liability insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-191",
+        "name": "Ten-year liability insurance",
+        "ecosystem": "Business protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-192",
+    "name": "Office and building insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-192",
+        "name": "Office and building insurance",
+        "ecosystem": "Business protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-193",
+    "name": "Industrial property insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-193",
+        "name": "Industrial property insurance",
+        "ecosystem": "Business protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-194",
+    "name": "Guaranteed income insurance for the self-employed",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-194",
+        "name": "Guaranteed income insurance for the self-employed",
+        "ecosystem": "Business protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-195",
+    "name": "Outstanding balance insurance for entrepreneurs",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Business protection",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-195",
+        "name": "Outstanding balance insurance for entrepreneurs",
+        "ecosystem": "Business protection"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-196",
+    "name": "Agroflex Credit",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Agriculture and horticulture",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-196",
+        "name": "Agroflex Credit",
+        "ecosystem": "Agriculture and horticulture"
+      }
+    ],
+    "service_kind": "credit"
+  },
+  {
+    "id": "kbc-197",
+    "name": "Agriculture and horticulture insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Agriculture and horticulture",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-197",
+        "name": "Agriculture and horticulture insurance",
+        "ecosystem": "Agriculture and horticulture"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-198",
+    "name": "Greenhouse horticulture insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Agriculture and horticulture",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-198",
+        "name": "Greenhouse horticulture insurance",
+        "ecosystem": "Agriculture and horticulture"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-199",
+    "name": "Registered email - IPEX",
+    "provider": "IPEX",
+    "ecosystem": "Administration and documents",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-199",
+        "name": "Registered email - IPEX",
+        "ecosystem": "Administration and documents"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-200",
+    "name": "Digital vault",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Administration and documents",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-200",
+        "name": "Digital vault",
+        "ecosystem": "Administration and documents"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-201",
+    "name": "eBox",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Administration and documents",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-201",
+        "name": "eBox",
+        "ecosystem": "Administration and documents"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-202",
+    "name": "Cera share administration",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Administration and documents",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-202",
+        "name": "Cera share administration",
+        "ecosystem": "Administration and documents"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-203",
+    "name": "Joyn loyalty points",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Shopping and everyday services",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-203",
+        "name": "Joyn loyalty points",
+        "ecosystem": "Shopping and everyday services"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-204",
+    "name": "Digital loyalty cards",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Shopping and everyday services",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-204",
+        "name": "Digital loyalty cards",
+        "ecosystem": "Shopping and everyday services"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-205",
+    "name": "Top up Orange Tempo",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Shopping and everyday services",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-205",
+        "name": "Top up Orange Tempo",
+        "ecosystem": "Shopping and everyday services"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-206",
+    "name": "Top up Proximus Pay&Go",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Shopping and everyday services",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-206",
+        "name": "Top up Proximus Pay&Go",
+        "ecosystem": "Shopping and everyday services"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-207",
+    "name": "Top up BASE",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Shopping and everyday services",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-207",
+        "name": "Top up BASE",
+        "ecosystem": "Shopping and everyday services"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-208",
+    "name": "Donate to Kom op tegen Kanker",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Shopping and everyday services",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-208",
+        "name": "Donate to Kom op tegen Kanker",
+        "ecosystem": "Shopping and everyday services"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-209",
+    "name": "Financial news - De Tijd, VRT NWS and KBC",
+    "provider": "De Tijd, VRT NWS and KBC",
+    "ecosystem": "Shopping and everyday services",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-209",
+        "name": "Financial news - De Tijd, VRT NWS and KBC",
+        "ecosystem": "Shopping and everyday services"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-210",
+    "name": "Kate Coins",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Shopping and everyday services",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-210",
+        "name": "Kate Coins",
+        "ecosystem": "Shopping and everyday services"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-211",
+    "name": "KBC Mobile",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "first_job"
+    ],
+    "supported_intents": [
+      "first_job"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-211",
+        "name": "KBC Mobile",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-212",
+    "name": "KBC Touch",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-212",
+        "name": "KBC Touch",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-213",
+    "name": "KBC Business Dashboard",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-213",
+        "name": "KBC Business Dashboard",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-214",
+    "name": "KBC Business app",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-214",
+        "name": "KBC Business app",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-215",
+    "name": "KBC Reach",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-215",
+        "name": "KBC Reach",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-216",
+    "name": "KBC Reach app",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-216",
+        "name": "KBC Reach app",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-217",
+    "name": "Kate",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-217",
+        "name": "Kate",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-218",
+    "name": "KBC Partner Hub",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-218",
+        "name": "KBC Partner Hub",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-219",
+    "name": "KBC Developer Portal",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-219",
+        "name": "KBC Developer Portal",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-220",
+    "name": "Search for documents via Kate",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-220",
+        "name": "Search for documents via Kate",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-221",
+    "name": "Query income and expenses via Kate",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [
+      "first_job"
+    ],
+    "supported_intents": [
+      "first_job"
+    ],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-221",
+        "name": "Query income and expenses via Kate",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-222",
+    "name": "Manage cards via Kate",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-222",
+        "name": "Manage cards via Kate",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-223",
+    "name": "Make transfers via Kate",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-223",
+        "name": "Make transfers via Kate",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-224",
+    "name": "Report a claim via Kate",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Digital platforms and assistance",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-224",
+        "name": "Report a claim via Kate",
+        "ecosystem": "Digital platforms and assistance"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-225",
+    "name": "Online fraud insurance",
+    "provider": "Provider not independently verified",
+    "ecosystem": "Security",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-225",
+        "name": "Online fraud insurance",
+        "ecosystem": "Security"
+      }
+    ],
+    "service_kind": "insurance"
+  },
+  {
+    "id": "kbc-226",
+    "name": "Instalment Loan - Partner Hub",
+    "provider": "Partner Hub",
+    "ecosystem": "General integrations",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-226",
+        "name": "Instalment Loan - Partner Hub",
+        "ecosystem": "General integrations"
+      }
+    ],
+    "service_kind": "technical"
+  },
+  {
+    "id": "kbc-227",
+    "name": "PSD2 Account Information Services",
+    "provider": "Provider not independently verified",
+    "ecosystem": "General integrations",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-227",
+        "name": "PSD2 Account Information Services",
+        "ecosystem": "General integrations"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-228",
+    "name": "PSD2 Payment Initiation Services",
+    "provider": "Provider not independently verified",
+    "ecosystem": "General integrations",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-228",
+        "name": "PSD2 Payment Initiation Services",
+        "ecosystem": "General integrations"
+      }
+    ],
+    "service_kind": "unreviewed"
+  },
+  {
+    "id": "kbc-229",
+    "name": "Application status webhooks",
+    "provider": "Provider not independently verified",
+    "ecosystem": "General integrations",
+    "description": "Listed in the supplied KBC ecosystem workbook. Availability and capabilities have not been independently verified.",
+    "supported_goal_categories": [],
+    "supported_intents": [],
+    "required_information": [],
+    "source": "KBC_Ecosystems.xlsx",
+    "source_records": [
+      {
+        "id": "kbc-229",
+        "name": "Application status webhooks",
+        "ecosystem": "General integrations"
+      }
+    ],
+    "service_kind": "technical"
   }
 ]

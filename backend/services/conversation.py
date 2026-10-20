@@ -89,7 +89,10 @@ def converse(db, cid, message):
         for role, value in (("user", message), ("assistant", text)):
             db.add(ChatMessage(customer_id=cid, role=role, text=value[:3000], proposal_id=None, as_of=today()))
     db.flush()
-    return dict(output.model_dump(), ephemeral=not prefs.memory_enabled, displayed_text=text)
+    from .service_matching import conversation_services
+    from .life import decisions
+    return dict(output.model_dump(), ephemeral=not prefs.memory_enabled, displayed_text=text,
+                matched_services=conversation_services(output, context, decisions(db, cid)))
 
 
 def confirm(db, cid, proposal_id, accept):

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'service_cards.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -50,8 +51,10 @@ class RecommendationSection extends StatefulWidget {
     required this.snapshot,
     required this.load,
     this.feedback,
+    this.dismissService,
   });
   final Map<String, dynamic> snapshot;
+  final ServiceDismiss? dismissService;
   final Future<Map<String, dynamic>> Function(int) load;
   final Future<bool> Function(String id, String status)? feedback;
 
@@ -206,6 +209,10 @@ class _RecommendationSectionState extends State<RecommendationSection>
             ..._cards!.map((card) => RecommendationCard(
                 key: ValueKey(card['id']),
                 card: card,
+                dismissService: widget.dismissService,
+                excludedServices: widget.snapshot['life']
+                        ?['dismissed_service_ids'] as List? ??
+                    [],
                 feedback: widget.feedback == null
                     ? null
                     : (status) async {
@@ -232,7 +239,14 @@ class _RecommendationSectionState extends State<RecommendationSection>
 }
 
 class RecommendationCard extends StatefulWidget {
-  const RecommendationCard({super.key, required this.card, this.feedback});
+  const RecommendationCard(
+      {super.key,
+      required this.card,
+      this.feedback,
+      this.dismissService,
+      this.excludedServices = const []});
+  final ServiceDismiss? dismissService;
+  final List<dynamic> excludedServices;
   final Map<String, dynamic> card;
   final Future<void> Function(String status)? feedback;
 
@@ -289,6 +303,11 @@ class _RecommendationCardState extends State<RecommendationCard> {
               // Fixed UI action: generated text cannot navigate or execute.
               child: Text(_details ? 'Hide details' : 'View details'),
             ),
+          ),
+          ServiceCards(
+            services: card['matched_services'] as List? ?? [],
+            dismiss: widget.dismissService,
+            excluded: widget.excludedServices,
           ),
           if (widget.feedback != null)
             Wrap(spacing: 6, children: [

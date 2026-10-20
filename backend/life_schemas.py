@@ -157,16 +157,41 @@ class ServiceRecord(Command):
     last_verified_at: date | None = None
     requires_customer_action: Literal[True] = True
     integration_status: Literal["not_connected"] = "not_connected"
+    source: str = "Curated official information"
+    source_records: list[dict[str, str]] = Field(default_factory=list)
+    supported_intents: list[Label] = Field(default_factory=list, max_length=30)
+    service_kind: Literal["information", "credit", "investment", "insurance", "technical", "unreviewed"] = "information"
+    destination_url: str | None = None
+    destination_status: Literal["verified", "unverified"] = "unverified"
+    destination_verified_at: date | None = None
 
     @model_validator(mode="after")
     def verified(self):
-        from urllib.parse import urlparse
         if self.verification_status == "official_source":
             if not self.last_verified_at or not self.verified_url:
                 raise ValueError("Official verification requires a date and source")
-            parsed = urlparse(self.verified_url)
-            if parsed.scheme != "https" or parsed.hostname not in {"www.kbc.be", "www.kbc.com", "www.kbcbrussels.be", "startit-x.com"}:
+            if not safe_official_url(self.verified_url):
                 raise ValueError("Source must be an approved official domain")
         elif self.verified_url:
             raise ValueError("Unverified catalogue entries cannot supply verified links")
+        if self.destination_status == "verified":
+            if (self.verification_status != "official_source" or not self.destination_verified_at
+                    or not self.destination_url or not safe_official_url(self.destination_url)):
+                raise ValueError("Navigation requires a verified official destination")
+        elif self.destination_url or self.destination_verified_at:
+            raise ValueError("Unverified destinations must be empty")
         return self
+
+
+def safe_official_url(value):
+    """Static catalogue links only: no credentials, query payloads or redirect parameters."""
+    from urllib.parse import urlsplit
+    try:
+        parsed = urlsplit(value)
+        return (parsed.scheme == "https" and parsed.hostname in
+                {"www.kbc.be", "www.kbc.com", "www.kbcbrussels.be", "startit-x.com"}
+                and not parsed.username and not parsed.password and parsed.port in (None, 443)
+                and not parsed.query and not parsed.fragment and not any(c.isspace() for c in value)
+                and "\\" not in value)
+    except (ValueError, TypeError):
+        return False

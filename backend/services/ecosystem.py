@@ -19,17 +19,8 @@ def catalogue(path=None):
 
 
 def relevant_services(items, preferences):
-    categories = {g["category"] for g in items if g["status"] == "active"}
-    categories -= set(preferences.protected_categories)
-    if preferences.allowed_categories:
-        categories &= set(preferences.allowed_categories)
-    return [s for s in catalogue() if s["verification_status"] == "official_source"
-            and s["last_verified_at"] <= str(today())
-            and categories.intersection(s["supported_goal_categories"])
-            and not (preferences.financing_preference == "saving" and s["id"] == "kbc_home_loan_information")
-            and not (s["ecosystem"] == "Investing" and
-                     (not preferences.budgets or any(b.savings_pool is None or b.savings_pool < b.emergency_reserve
-                         or b.monthly_capacity is None or b.monthly_capacity <= 0 for b in preferences.budgets)))]
+    from .service_matching import goal_services
+    return goal_services(items, preferences)
 
 
 def import_catalogue(source, destination):

@@ -1,3 +1,4 @@
+import 'service_cards.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -116,6 +117,19 @@ class _CustomerScreenState extends State<CustomerScreen> {
           result['chat']['messages'] = previous!['chat']['messages'];
           result['chat']['last_response'] = previous['chat']['last_response'];
         }
+        // Keep the current turn's enrichment across identical background snapshots.
+        // Changed consent, goals, preferences or messages invalidate it.
+        if (result['chat']?['blocked'] == false &&
+            jsonEncode(result['chat']?['messages']) ==
+                jsonEncode(previous?['chat']?['messages']) &&
+            jsonEncode(result['life']?['goals']) ==
+                jsonEncode(previous?['life']?['goals']) &&
+            jsonEncode(result['life']?['preferences']) ==
+                jsonEncode(previous?['life']?['preferences']) &&
+            jsonEncode(result['life']?['information']) ==
+                jsonEncode(previous?['life']?['information'])) {
+          result['chat']['last_response'] = previous?['chat']?['last_response'];
+        }
         if (mounted &&
             !_busy &&
             _selected == id &&
@@ -169,6 +183,13 @@ class _CustomerScreenState extends State<CustomerScreen> {
     try {
       final result = await _request('/customers/$_selected/$suffix',
           post: 'POST', body: body) as Map<String, dynamic>;
+      if (suffix.startsWith('services/') &&
+          result['chat']?['blocked'] == false) {
+        result['chat']['last_response'] = _state?['chat']?['last_response'];
+        if (_state?['chat']?['last_response']?['ephemeral'] == true) {
+          result['chat']['messages'] = _state?['chat']?['messages'];
+        }
+      }
       if (mounted) setState(() => _state = result);
       success = true;
     } catch (error) {
@@ -369,6 +390,16 @@ class _CustomerScreenState extends State<CustomerScreen> {
                       Text(m['text'] as String),
                     ]),
               )),
+          if (!blocked)
+            ServiceCards(
+              key: ValueKey('chat-services-$_selected'),
+              services:
+                  chat['last_response']?['matched_services'] as List? ?? [],
+              excluded:
+                  _state?['life']?['dismissed_service_ids'] as List? ?? [],
+              dismiss: (id) => _mutate('services/$id/feedback',
+                  body: {'status': 'dismissed'}),
+            ),
           for (final proposal
               in (_state?['life']?['pending_proposals'] as List? ?? []))
             Card(
@@ -622,6 +653,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
                       key: ValueKey('recommendations-${customer['id']}'),
                       snapshot: _state!,
                       load: RecommendationApi(_client, baseUrl, token).analyze,
+                      dismissService: (id) => _mutate('services/$id/feedback',
+                          body: {'status': 'dismissed'}),
                       feedback: (id, status) => _mutate(
                           'recommendations/$id/feedback',
                           body: {'status': status}),

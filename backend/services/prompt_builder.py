@@ -196,7 +196,11 @@ def build_context(db, customer_id):
     for goal in context["goals"]:
         signals.append({"id": f"goal_{goal['id']}", "type": "declared_goal", "value": goal["title"],
                         "status": "confirmed", "source": "customer_declaration", "goal_id": goal["id"]})
+    from .service_matching import excluded_services, owned_services
+    excluded = excluded_services(decisions(db, customer_id)) | owned_services(context)
     for service in relevant_services(items, prefs):
+        if service["id"] in excluded:
+            continue
         context["services"].append({k: service[k] for k in
             ("id", "name", "description", "supported_goal_categories", "verification_status", "integration_status")})
         context["services"][-1].update(requires_confirmation=True, execution="information_only", live_quote_available=False)

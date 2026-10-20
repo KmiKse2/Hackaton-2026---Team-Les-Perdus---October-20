@@ -438,3 +438,14 @@ Vérification V2 réalisée : **33 tests backend réussis**, analyse Flutter san
 Il n’y a pas d’authentification bancaire : le présentateur peut sélectionner et administrer tous les profils fictifs. `DEMO_API_TOKEN` protège facultativement l’API de démonstration ; ce jeton partagé ne remplace pas l’identité et l’autorisation par client d’un système réel. Une intégration réelle nécessitera notamment un connecteur authentifié, la vérification des consentements à la source, une politique de conservation et un audit. Aucun passage à l’échelle de millions de clients n’a été mesuré.
 
 Prototype indépendant, sans affiliation officielle à KBC.
+# KBC service matching extension
+
+Gemini recommendations and goal planning now share a deterministic KBC catalogue
+matcher. Related service cards provide verified official links and a persistent
+**Hide this service** action. Links open only on customer request; no purchase,
+loan or partner API action is executed.
+
+Rebuild all three services with `docker compose up --build -d`, then open
+**http://localhost:8080**. Existing PostgreSQL data and ADC configuration are retained.
+See [the integration audit, destination inventory, tests and demo](docs/kbc-service-matching.md)
+for verified versus unavailable services and the complete customer journey.
