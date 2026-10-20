@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LifeFlow — Every life has its rhythm</title>
+  <link rel="stylesheet" href="/assets/style.css?v=0.4.1">
+  <script src="/assets/app.js?v=0.4.1" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="LifeFlow home"><span class="brand-icon">≈</span>LifeFlow<span class="brand-dot">.</span></a>
+    <div class="workspace-label">DEMO WORKSPACE</div>
+    <div class="nav-item active"><span>◈</span> Overview</div>
+    <div class="sidebar-note"><span class="small-circle"></span> Signal Engine for Kate<br><small>Observe. Verify. Explain.</small></div>
+    <div class="sidebar-bottom"><div class="team-avatar">LP</div><div>Les Perdus<small>Tectonic Hackathon · 2026</small></div></div>
+  </aside>
+  <main>
+    <header><div class="breadcrumb">Workspace <span>/</span> Life Engine</div><div class="demo-pill"><i></i> Synthetic data</div></header>
+    <section class="heading"><div><div class="eyebrow">THE CONTEXT BEHIND A BETTER CONVERSATION</div><h1>Understand every journey.</h1><p>Declared profiles, observations and inferred categories: explainable context for Kate.</p></div><div class="version">PROTOTYPE <b>V.04</b></div></section>
+    <div id="error" class="error" role="alert" hidden></div>
+    <form id="token-form" class="token-form" hidden><label>Demo token <input id="token" type="password" autocomplete="off" required></label><button class="primary">Sign in</button></form>
+    <section class="toolbar"><div><span class="control-label">EXPLORE A JOURNEY</span><div id="customers" class="customer-tabs" role="group" aria-label="Customers"></div></div><div class="simulation-controls"><label>Advance <select id="simulation-months" aria-label="Months to simulate"><option value="1">1 month</option><option value="3">3 months</option><option value="6">6 months</option><option value="12">12 months</option></select></label><button id="reset" class="secondary" disabled>↺ Reset</button><button id="simulate" class="primary" disabled>▶ Simulate next months</button></div></section>
+    <section class="panel"><details><summary>Monthly simulation history</summary><div id="simulation-timeline"></div></details></section>
+    <section class="panel profile-panel"><div class="panel-heading"><h3>Customer profile and categories</h3><span id="profile-status" class="outline-badge"></span></div><div id="profile-categories"></div><p id="profile-note"></p><div class="profile-actions"><button id="personalization-toggle" class="secondary" disabled>Disable personalisation</button></div><details><summary>Edit the demo profile information</summary><form id="profile-form"><label>Date of birth (optional)<input id="profile-birth" type="date"></label><label>Employment status<select id="profile-employment"><option value="unknown">Unknown</option><option value="student">Student</option><option value="employed">Employed</option><option value="self_employed">Self-employed</option><option value="unemployed">Unemployed</option><option value="retired">Retired</option></select></label><label>Household status<select id="profile-household"><option value="unknown">Unknown</option><option value="single">Single</option><option value="married">Married</option><option value="cohabiting">Cohabiting</option><option value="divorced">Divorced</option></select></label><label>Dependants<input id="profile-dependents" type="number" min="0" max="30"></label><button class="primary" id="profile-save">Save demo profile</button></form></details><details id="catalog-details"><summary id="catalog-summary">Signal catalogue</summary><div id="catalog-signals"></div></details></section>
+    <div class="workspace">
+      <section class="customer-column"><div class="section-label"><span>01 / CUSTOMER EXPERIENCE</span><span class="live"><i></i> Synced</span></div>
+        <div class="phone"><div class="phone-top"><b>9:41</b><span>••• ▰</span></div><div class="bank-header"><strong>KBC <span>× LifeFlow</span></strong><div class="avatar" id="phone-avatar">TH</div></div>
+          <div class="greeting">A look at your finances</div><h2 id="greeting">Hello Thomas <span>☀</span></h2>
+          <div class="balance-card"><div>Available balance <span>↗</span></div><strong id="balance">—</strong><small id="balance-note">Bank snapshot · EUR</small><div class="card-decoration">≈</div></div>
+          <div id="credit-note" class="credit-note" hidden></div>
+          <div class="phone-section-title">For you <span class="personal-badge">PERSONALISED</span></div>
+          <div id="personalization" aria-live="polite"></div>
+          <section class="kate-chat" aria-label="Kate chat preview"><div class="phone-section-title">Chat with Kate <span class="personal-badge">DEMO</span></div><p class="chat-note">Local preview · no live quotes or orders</p><p id="chat-intro"></p><div id="chat-proposals"></div><div id="chat-messages" role="log" aria-live="polite"></div><form id="chat-form"><label class="chat-label" for="chat-input">Your message</label><input id="chat-input" maxlength="1000" placeholder="Ask about a suggested option…" autocomplete="off"><button id="chat-send" class="primary" disabled>Send</button></form></section>
+          <div class="phone-section-title">Recent transactions <span id="period"></span></div><div id="transactions"></div>
+          <div class="phone-nav"><span class="selected">◈<small>Home</small></span><span>▤<small>Accounts</small></span><span>◎<small>Profile</small></span></div>
+        </div><p class="phone-caption">Customer web preview · Flutter app in /frontend</p>
+      </section>
+      <section class="engine-column"><div class="section-label"><span>02 / LIFE ENGINE</span><span id="engine-status">Waiting for data</span></div>
+        <div class="engine-intro"><div class="engine-icon">✳</div><div><h2>Facts before words.</h2><p>Bank data → explainable signals → context for Kate.</p></div><span class="outline-badge">NO LLM</span></div>
+        <article class="panel banking-panel"><div class="panel-heading"><h3>Bank data access</h3><span id="consent-status" class="outline-badge"></span></div><div id="consent-summary"></div><div id="accounts"></div><button id="consent-toggle" class="secondary" disabled>Revoke demo consent</button></article>
+        <div class="stats"><div><span>Monthly income</span><strong id="income">—</strong><small id="month">Demo history</small></div><div><span>Monthly expenses</span><strong id="expenses">—</strong><small>Observed transactions</small></div><div><span>Active signals</span><strong id="signal-count">0 <em>signal</em></strong><small>Rolling 30-day window</small></div></div>
+        <article class="panel"><div class="panel-heading"><h3><span class="step">1</span> Detected signals</h3><span class="muted">OBSERVATION</span></div><div id="signals"></div><div id="quality" class="quality-note"></div></article>
+        <div class="connector">↓</div>
+        <article class="panel"><div class="panel-heading"><h3><span class="step">2</span> What might be changing</h3><span class="muted">INTERPRETATION</span></div><div id="events"></div><div class="score-note">ⓘ Scores reflect rule weights, not probabilities.</div></article>
+        <article class="panel kate-panel"><div class="panel-heading"><h3><span class="step">3</span> Context prepared for Kate</h3><span class="outline-badge">LOCAL CONTRACT</span></div><p id="kate-summary"></p><details><summary>View structured context</summary><pre id="kate-context"></pre></details><small>No connection to Kate. Customer messages are local previews.</small></article>
+        <div class="trust-card"><span>◇</span><div><strong>The customer has the final say.</strong><p>Every hypothesis can be confirmed or dismissed. Expired or revoked consent hides the associated data and context.</p></div></div>
+      </section>
+    </div><footer>LifeFlow · Les Perdus <span>An independent prototype, not officially affiliated with KBC.</span></footer>
+  </main>
+  <dialog id="plan-dialog"><button id="close-dialog" class="dialog-close" aria-label="Close">×</button><div class="eyebrow">YOUR NEXT STEP</div><h2 id="plan-title"></h2><p id="plan-copy"></p><small>An option to explore in this demo.</small></dialog>
+</body>
+</html>

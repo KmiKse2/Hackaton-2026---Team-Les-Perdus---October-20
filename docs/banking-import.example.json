@@ -1,0 +1,72 @@
+{
+  "consentId": "demo-consent-1",
+  "asOf": "2026-09-30",
+  "accounts": [
+    {
+      "details": {
+        "resourceId": "demo-1-current",
+        "iban": "DEMO-CURRENT-1",
+        "currency": "EUR",
+        "name": "Compte courant de démonstration",
+        "ownerName": "Thomas fictif",
+        "product": "current",
+        "cashAccountType": "CACC",
+        "status": "enabled",
+        "usage": "PRIV"
+      },
+      "balances": [
+        {
+          "balanceAmount": {"amount": "2645.00", "currency": "EUR"},
+          "balanceType": "interimAvailable",
+          "referenceDate": "2026-09-30",
+          "lastChangeDateTime": "2026-09-30T12:00:00Z",
+          "creditLimitIncluded": false
+        },
+        {
+          "balanceAmount": {"amount": "2700.00", "currency": "EUR"},
+          "balanceType": "interimBooked",
+          "referenceDate": "2026-09-30"
+        }
+      ],
+      "historyFrom": "2026-07-01",
+      "historyTo": "2026-09-30",
+      "transactions": {
+        "booked": [
+          {
+            "transactionId": "sample-support-july",
+            "transactionAmount": {"amount": "500.00", "currency": "EUR"},
+            "bookingDate": "2026-07-01",
+            "debtorName": "Famille fictive"
+          },
+          {
+            "transactionId": "sample-salary",
+            "transactionAmount": {"amount": "2650.00", "currency": "EUR"},
+            "bookingDate": "2026-09-01",
+            "valueDate": "2026-09-01",
+            "debtorName": "Employeur fictif",
+            "debtorAccount": {"iban": "DEMO-EMPLOYER"},
+            "purposeCode": "SALA",
+            "endToEndId": "demo-end-to-end",
+            "remittanceInformationUnstructured": "Salaire septembre",
+            "bankTransactionCode": {"domain": "PMNT", "family": "RCDT"}
+          },
+          {
+            "transactionId": "sample-train",
+            "transactionAmount": {"amount": "-105.00", "currency": "EUR"},
+            "bookingDate": "2026-09-02",
+            "creditorName": "SNCB",
+            "remittanceInformationUnstructured": "Abonnement mensuel"
+          }
+        ],
+        "pending": [
+          {
+            "transactionId": "sample-pending",
+            "transactionAmount": {"amount": "-55.00", "currency": "EUR"},
+            "creditorName": "Commerçant fictif",
+            "valueDate": "2026-10-01"
+          }
+        ]
+      }
+    }
+  ]
+}

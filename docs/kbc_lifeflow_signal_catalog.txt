@@ -1,0 +1,911 @@
+SIGNAL CATALOG FOR KBC LIFEFLOW
+
+1. age_group
+Source:
+- Customer identity / KYC data
+
+How to obtain:
+- Read customer date_of_birth
+- Convert into age range, for example:
+  18-25
+  26-35
+  36-50
+  51-65
+  65+
+
+Type:
+- Declared / verified
+
+Recommended confidence:
+- 1.0
+
+
+2. employment_status
+Source:
+- Customer-declared profile data
+- KYC information
+- Financial planning / credit information when available
+
+Possible values:
+- student
+- employed
+- self_employed
+- unemployed
+- retired
+- unknown
+
+How to obtain:
+- Read directly from customer profile when available
+- Do not infer as fact if not declared
+
+Type:
+- Declared
+
+Recommended confidence:
+- 1.0 if explicitly declared
+- otherwise null / unknown
+
+
+3. occupation
+Source:
+- Customer-declared profile
+- KYC or financial service information when collected
+
+How to obtain:
+- Read occupation field from profile
+
+Example:
+- software_engineer
+- teacher
+- nurse
+- consultant
+
+Type:
+- Declared
+
+Recommended confidence:
+- 1.0
+
+
+4. industry
+Source:
+- Customer-declared employment information
+
+How to obtain:
+- Read industry / sector field from profile
+- Normalize into categories
+
+Example:
+- IT
+- healthcare
+- education
+- construction
+- finance
+
+Type:
+- Declared
+
+Recommended confidence:
+- 1.0
+
+
+5. monthly_income
+Source:
+- Incoming transactions
+- Customer-declared income
+
+How to obtain:
+- Detect recurring incoming payments
+- Group by sender / payment description
+- Calculate average monthly amount over last N months
+
+Example logic:
+- salary payments detected 3 months in a row
+- average = 2650 EUR
+
+Type:
+- Observed or declared
+
+Recommended confidence:
+- 0.95 if recurring transaction pattern
+- 1.0 if verified/declaration used
+
+
+6. income_change_percentage
+Source:
+- Transaction history
+
+How to obtain:
+- Compare average income over recent period versus previous period
+
+Formula:
+(current_avg_income - previous_avg_income)
+/ previous_avg_income * 100
+
+Type:
+- Derived
+
+Example:
++320%
+
+Recommended confidence:
+- 1.0 because it is mathematically derived
+
+
+7. income_source_type
+Source:
+- Incoming transaction descriptions
+- Customer-declared information
+
+Possible values:
+- salary
+- pension
+- student_grant
+- unemployment_benefit
+- social_benefit
+- freelance_income
+- family_transfer
+- investment_income
+- unknown
+
+How to obtain:
+- Merchant / sender classification
+- Transaction label analysis
+- Known recurring payer patterns
+
+Type:
+- Observed / inferred
+
+Recommended confidence:
+- 0.6-0.95 depending on match quality
+
+
+8. new_recurring_salary
+Source:
+- Transaction history
+
+How to obtain:
+- Detect recurring incoming payment
+- Similar sender
+- Similar amount range
+- Monthly periodicity
+- Category classified as salary
+
+Example:
+ACME BELGIUM
++2650 EUR
+every month
+
+Type:
+- Derived
+
+Recommended confidence:
+- 0.9+ after 2-3 recurring occurrences
+
+
+9. salary_stopped
+Source:
+- Transaction history
+
+How to obtain:
+- Salary was recurring in previous months
+- Expected salary no longer appears during current period
+
+Type:
+- Derived
+
+Recommended confidence:
+- 0.8 after one missed cycle
+- 0.95 after two missed cycles
+
+
+10. student_grant_detected
+Source:
+- Incoming transactions
+
+How to obtain:
+- Detect payment from recognized education / public institution
+- Classify description as student grant
+
+Type:
+- Inferred from observed data
+
+Recommended confidence:
+- 0.75-0.95
+
+
+11. household_status
+Source:
+- Customer-declared data
+- Financial planning / credit processes when available
+
+Possible values:
+- single
+- married
+- cohabiting
+- divorced
+- unknown
+
+How to obtain:
+- Read customer-declared field
+
+Type:
+- Declared
+
+Recommended confidence:
+- 1.0
+
+
+12. dependents_count
+Source:
+- Customer-declared information
+
+How to obtain:
+- Read number of dependents from profile if available
+
+Type:
+- Declared
+
+Recommended confidence:
+- 1.0
+
+
+13. current_account_balance
+Source:
+- Bank account data
+
+How to obtain:
+- Query current balance from account system / simulated database
+
+Type:
+- Observed
+
+Recommended confidence:
+- 1.0
+
+
+14. savings_balance
+Source:
+- Savings account data
+
+How to obtain:
+- Sum balances of savings products owned by customer
+
+Type:
+- Observed
+
+Recommended confidence:
+- 1.0
+
+
+15. monthly_savings_rate
+Source:
+- Transactions + account balances
+
+How to obtain:
+- Calculate:
+  net amount transferred to savings during month
+  / monthly income
+
+Example:
+450 / 2650 = 16.98%
+
+Type:
+- Derived
+
+Recommended confidence:
+- 1.0
+
+
+16. savings_trend
+Source:
+- Historical savings balances
+
+Possible values:
+- increasing
+- stable
+- decreasing
+
+How to obtain:
+- Compare savings balances over multiple months
+- Or calculate monthly net savings flow
+
+Type:
+- Derived
+
+Recommended confidence:
+- 1.0
+
+
+17. recurring_expenses
+Source:
+- Transaction history
+
+How to obtain:
+- Identify outgoing transactions with:
+  same merchant
+  similar amount
+  predictable frequency
+
+Examples:
+- rent
+- electricity
+- internet
+- phone
+- insurance
+- subscriptions
+
+Type:
+- Derived
+
+Recommended confidence:
+- 0.85+
+
+
+18. new_rent_payment
+Source:
+- Transaction history
+
+How to obtain:
+- Detect a new recurring outgoing payment
+- Classify it as rent / housing payment
+
+Type:
+- Derived
+
+Recommended confidence:
+- 0.8-0.95
+
+
+19. housing_spending_increase
+Source:
+- Transaction history
+
+How to obtain:
+- Aggregate categories:
+  furniture
+  DIY
+  utilities
+  housing
+  moving
+- Compare recent period against historical baseline
+
+Type:
+- Derived
+
+Recommended confidence:
+- 1.0 for amount change
+- separate confidence for interpretation
+
+
+20. travel_spending_detected
+Source:
+- Transaction history
+
+How to obtain:
+- Detect transactions categorized as:
+  airline
+  hotel
+  travel agency
+  booking platform
+  foreign currency spending
+
+Type:
+- Derived
+
+Recommended confidence:
+- 0.8-0.95
+
+
+21. foreign_transaction_activity
+Source:
+- Card transaction data
+
+How to obtain:
+- Detect:
+  foreign merchant country
+  non-EUR currency
+  international ATM use
+
+Type:
+- Observed
+
+Recommended confidence:
+- 1.0
+
+
+22. unusual_spending
+Source:
+- Transaction history
+
+How to obtain:
+- Compare current transaction against customer's normal behavior
+
+Possible methods:
+- Z-score
+- percentile threshold
+- rolling average deviation
+- category-specific baseline
+
+Example:
+current furniture spend = 700 EUR
+normal monthly furniture spend = 40 EUR
+
+Type:
+- Derived
+
+Recommended confidence:
+- Based on anomaly score
+
+
+23. spending_category_shift
+Source:
+- Transaction history
+
+How to obtain:
+- Compare category distribution between periods
+
+Example:
+housing spending:
+previous 3 months = 5%
+current month = 28%
+
+Type:
+- Derived
+
+Recommended confidence:
+- 1.0 for numeric change
+
+
+24. monthly_expenses
+Source:
+- Transaction history
+
+How to obtain:
+- Sum relevant outgoing transactions over month
+
+Type:
+- Derived
+
+Recommended confidence:
+- 1.0
+
+
+25. expense_change_percentage
+Source:
+- Transaction history
+
+How to obtain:
+- Compare recent average expenses with historical average
+
+Type:
+- Derived
+
+Recommended confidence:
+- 1.0
+
+
+26. overdraft_frequency
+Source:
+- Account balance history
+
+How to obtain:
+- Count how many times balance drops below zero
+- Or below configured low-balance threshold
+
+Type:
+- Derived
+
+Recommended confidence:
+- 1.0
+
+
+27. low_balance_risk
+Source:
+- Balance history + recurring expenses
+
+How to obtain:
+- Forecast expected balance before next income event
+- Consider known recurring payments
+
+Type:
+- Derived
+
+Recommended confidence:
+- Numeric forecast confidence
+
+
+28. savings_withdrawal_detected
+Source:
+- Savings account transactions
+
+How to obtain:
+- Detect unusually large transfers from savings to current account
+
+Type:
+- Derived
+
+Recommended confidence:
+- 1.0 for transaction
+- lower for meaning
+
+
+29. loan_products
+Source:
+- Internal bank product database
+
+Possible values:
+- mortgage
+- car_loan
+- personal_loan
+- no_loan
+
+How to obtain:
+- Query products associated with customer
+
+Type:
+- Observed
+
+Recommended confidence:
+- 1.0
+
+
+30. monthly_loan_commitment
+Source:
+- Internal credit data
+
+How to obtain:
+- Sum monthly repayments of active loans
+
+Type:
+- Observed / derived
+
+Recommended confidence:
+- 1.0
+
+
+31. mortgage_started
+Source:
+- Internal product data
+- Transaction history
+
+How to obtain:
+- Detect new mortgage product activation
+- Or first recurring mortgage payment
+
+Type:
+- Observed / derived
+
+Recommended confidence:
+- 1.0 if internal product
+
+
+32. owned_kbc_products
+Source:
+- Internal product database
+
+Examples:
+- current account
+- savings account
+- credit card
+- insurance
+- mortgage
+- investments
+
+How to obtain:
+- Query customer-product relationship
+
+Type:
+- Observed
+
+Recommended confidence:
+- 1.0
+
+
+33. investment_balance
+Source:
+- Internal investment product data
+
+How to obtain:
+- Sum current value of customer investments held at bank
+
+Type:
+- Observed
+
+Recommended confidence:
+- 1.0
+
+
+34. investment_risk_profile
+Source:
+- MiFID / investment questionnaire
+
+Possible values:
+- conservative
+- balanced
+- dynamic
+- unknown
+
+How to obtain:
+- Read latest valid investment risk profile
+
+Type:
+- Declared / assessed
+
+Recommended confidence:
+- 1.0 while profile is valid
+
+
+35. financial_goal
+Source:
+- Customer-declared information
+- Previous interactions with Kate
+- Financial planning flow
+
+Examples:
+- save_for_house
+- build_emergency_fund
+- travel
+- invest
+- buy_car
+
+How to obtain:
+- Read declared goal
+- Store confirmed intents from conversations
+
+Type:
+- Declared / confirmed
+
+Recommended confidence:
+- 1.0 if explicit
+
+
+36. preferred_channel
+Source:
+- Customer preferences
+- App usage history
+
+Possible values:
+- mobile
+- web
+- branch
+- phone
+- Kate
+
+How to obtain:
+- Explicit preference OR most frequently used channel
+
+Type:
+- Declared or derived
+
+Recommended confidence:
+- 1.0 if declared
+- 0.7-0.9 if inferred
+
+
+37. mobile_usage_frequency
+Source:
+- KBC Mobile interaction logs
+
+How to obtain:
+- Count app sessions / active days over a period
+
+Type:
+- Observed
+
+Recommended confidence:
+- 1.0
+
+
+38. kate_interaction_history
+Source:
+- Kate conversation / action logs
+
+How to obtain:
+- Store structured metadata only:
+  topic
+  date
+  action
+  confirmation
+  outcome
+
+Type:
+- Observed
+
+Recommended confidence:
+- 1.0
+
+
+39. customer_confirmed_event
+Source:
+- Kate interaction
+
+How to obtain:
+- Kate asks customer to confirm an inferred event
+- Example:
+  "Did you recently start a new job?"
+- Store Yes / No answer
+
+Type:
+- Customer-confirmed
+
+Recommended confidence:
+- 1.0
+
+
+40. personalization_consent
+Source:
+- Consent / preference management system
+
+How to obtain:
+- Query current consent state
+
+Possible values:
+- true
+- false
+
+Type:
+- Verified
+
+Recommended confidence:
+- 1.0
+
+IMPORTANT:
+- If false, do not use customer data for personalization beyond what is legally
+  allowed for the specific purpose.
+
+
+41. data_source
+Purpose:
+- Every signal should store where it came from
+
+Possible values:
+- kyc
+- declared
+- transaction
+- account
+- product_database
+- kate_confirmation
+- inferred
+
+Example:
+{
+  "signal": "employment_status",
+  "value": "student",
+  "source": "declared"
+}
+
+
+42. signal_confidence
+Purpose:
+- Every inferred signal should carry a confidence score
+
+Example:
+{
+  "signal": "student_profile",
+  "value": true,
+  "confidence": 0.91
+}
+
+
+43. signal_timestamp
+Purpose:
+- Know whether information is still recent
+
+Example:
+{
+  "signal": "monthly_income",
+  "value": 2650,
+  "observed_at": "2026-09-30"
+}
+
+
+44. signal_status
+Possible values:
+- observed
+- inferred
+- confirmed
+- rejected
+- expired
+
+Purpose:
+- Prevent old or rejected assumptions from being reused
+
+
+ARCHITECTURE LEVELS
+
+LEVEL 1 — DECLARED / VERIFIED DATA
+--------------------------------
+age_group
+employment_status
+occupation
+household_status
+dependents_count
+financial_goal
+risk_profile
+consent
+
+
+LEVEL 2 — OBSERVED BANKING DATA
+-------------------------------
+transactions
+balances
+income
+loans
+savings
+products
+recurring payments
+app interactions
+
+
+LEVEL 3 — DERIVED SIGNALS
+-------------------------
+income_change_percentage
+new_salary
+new_rent
+travel_spending
+unusual_spending
+savings_trend
+low_balance_risk
+
+
+LEVEL 4 — INFERRED CUSTOMER STATE
+---------------------------------
+student
+young_professional
+first_job
+moving
+home_purchase
+travelling
+financial_stress
+wealth_growth
+
+
+IMPORTANT IMPLEMENTATION RULE
+
+Never store an inferred customer state as if it was a verified fact.
+
+Every inferred signal must contain:
+- value
+- confidence
+- source
+- timestamp
+- status
+
+Customer confirmation through Kate should override the inference.
+
+
+EXAMPLE STRUCTURE
+
+{
+  "customer_id": "CUST_001",
+
+  "signals": {
+    "age_group": {
+      "value": "18-25",
+      "source": "kyc",
+      "confidence": 1.0,
+      "status": "confirmed"
+    },
+
+    "employment_status": {
+      "value": "student",
+      "source": "declared",
+      "confidence": 1.0,
+      "status": "confirmed"
+    },
+
+    "new_recurring_salary": {
+      "value": true,
+      "source": "transaction_analysis",
+      "confidence": 0.94,
+      "status": "observed"
+    }
+  },
+
+  "inferred_state": {
+    "life_event": "FIRST_JOB",
+    "confidence": 0.91,
+    "status": "inferred"
+  }
+}
