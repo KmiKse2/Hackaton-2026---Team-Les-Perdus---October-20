@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'recommendations.dart';
 
 void main() => runApp(const LifeFlowApp());
 
@@ -505,6 +506,16 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                     style: TextStyle(
                                         color: Colors.blueGrey, height: 1.6))
                               ])),
+                    RecommendationSection(
+                      snapshot: _state!,
+                      load: RecommendationApi(_client, baseUrl, token).analyze,
+                    ),
+                    if (events.isNotEmpty)
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 12),
+                        child: Text('Banking signals · Rule-based observations',
+                            style: TextStyle(fontWeight: FontWeight.w600)),
+                      ),
                     ...events.map(_insight),
                     _chat(),
                     if (categories.isNotEmpty) ...[
