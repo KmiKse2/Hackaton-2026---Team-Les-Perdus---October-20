@@ -28,6 +28,9 @@ from .services.customer_state import STATE_LABELS, compute_catalog
 from .services.kate import handoff, personalize
 from .services.simulation import append_month
 from .services.solutions import chat_view, proposals, reply
+from .ai_schemas import AIAnalysis
+from .services.ai_analysis import analyze_context
+from .services.prompt_builder import build_context
 
 
 @asynccontextmanager
@@ -204,6 +207,13 @@ def insights(customer_id: int, db: Session = Depends(get_db)):
 @app.get("/api/customers/{customer_id}/kate-context", dependencies=protected)
 def kate_context(customer_id: int, db: Session = Depends(get_db)):
     return snapshot(db, customer_or_404(db, customer_id))["kate_context"]
+
+
+@app.post("/api/customers/{customer_id}/ai-analysis", dependencies=protected, response_model=AIAnalysis)
+def ai_analysis(customer_id: int, db: Session = Depends(get_db)):
+    customer_or_404(db, customer_id)
+    context = build_context(db, customer_id)
+    return analyze_context(customer_id, context)
 
 
 @app.post("/api/customers/{customer_id}/consent", dependencies=protected)

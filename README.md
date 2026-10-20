@@ -1,6 +1,6 @@
 # LifeFlow · Signal Engine pour Kate
 
-PoC du challenge KBC par **Les Perdus**. LifeFlow transforme les champs de comptes, soldes et transactions en **observations explicables**, puis prépare un contexte structuré pour Kate. Il n’utilise plus Gemini ni aucun LLM.
+PoC du challenge KBC par **Les Perdus**. LifeFlow transforme les champs de comptes, soldes et transactions en **observations explicables**, puis prépare un contexte structuré pour Kate. Un endpoint optionnel transmet désormais ce contexte minimisé à OpenAI pour produire une analyse JSON validée.
 
 **Le schéma fourni sert de contrat d’adaptation local. Ce dépôt n’est ni un connecteur KBC certifié ni une intégration à une API Kate.** Toutes les données de démonstration sont fictives ; aucun appel bancaire ou envoi à Kate n’est effectué.
 
@@ -22,7 +22,7 @@ docker compose up --build -d
 - Documentation des schémas et endpoints : http://localhost:8000/docs
 - Santé : http://localhost:8000/health
 
-Docker utilise PostgreSQL avec un volume persistant ; le mode Python local utilise SQLite par défaut. La configuration reste dans `.env.example`. Aucune clé de modèle n’est nécessaire.
+Docker utilise PostgreSQL avec un volume persistant ; le mode Python local utilise SQLite par défaut. La configuration reste dans `.env.example`. La démo locale fonctionne sans clé ; seul le nouvel endpoint d’analyse GPT nécessite `OPENAI_API_KEY`.
 
 Sur un nouveau poste (Python 3.11+) :
 
@@ -160,6 +160,87 @@ Les blocs `balances` et `transactions` sont facultatifs : omission = conservatio
 Le corps est validé : devises cohérentes, dates couvertes, identifiants uniques, montants décimaux et types de soldes connus. Un import est transactionnel ; aucun changement partiel ne survit à un échec. Une date `asOf` antérieure à l’état courant est refusée, sauf via la réinitialisation explicite de la démo.
 
 L’ancien `POST /transactions` reste un **outil de compatibilité pour fabriquer des données fictives**, marqué déprécié dans OpenAPI. Il traduit les anciennes catégories en champs synthétiques et ne constitue pas un import bancaire réel.
+
+## GPT analysis (LifeFlow architecture, step 1)
+
+`POST /api/customers/{customer_id}/ai-analysis` now adds a stateless pipeline:
+existing banking analysis → minimal Prompt Builder → OpenAI Responses API →
+strict Pydantic validation → JSON response. Existing Kate previews, endpoints,
+database tables and frontend behaviour remain compatible. This endpoint does
+not consume chat history, save generated results, or execute actions.
+
+Install `backend/requirements.txt`, then configure `OPENAI_API_KEY` and
+`OPENAI_MODEL` on the **backend**. The default model is `gpt-4.1-mini`; overrides
+must support Responses and Structured Outputs. Copy `.env.example` to `.env`
+for Docker Compose, which forwards these variables to the API container.
+For local Python, export the variables in the shell or use
+`uvicorn backend.main:app --env-file .env`. Never put the key in frontend
+configuration, version control, or requests to this endpoint.
+
+```powershell
+# After starting the backend with OPENAI_API_KEY configured:
+Invoke-RestMethod -Method Post `
+  -Uri 'http://localhost:8000/api/customers/1/ai-analysis' `
+  -Headers @{'X-Demo-Token' = $env:DEMO_API_TOKEN}
+```
+
+No request body is needed. The response contains `customer_id`, `summary`,
+`detected_needs`, `recommendations`, `clarification_questions` and
+`suggested_actions`. Recommendations include an ID, title, description,
+`need_id`, `signal_refs`, nullable `service_id`, justification and
+`requires_confirmation`. Actions always have `execution: "proposal_only"`.
+The customer ID is attached by the backend, never sent to or trusted from GPT.
+Signal references such as `signal_1` are local to this analysis, not database IDs.
+The full response schema is available in `/docs`.
+
+The Prompt Builder reuses `banking.inspect`, personalization consent checks,
+`customer_state.compute_catalog` and `solutions.proposals`. Data sent to OpenAI:
+
+- Scoped banking signal types, aggregate metrics, confidence, limitations and
+  anonymized evidence references; aggregate financial summaries and coverage.
+- Available structured profile facts (age band, employment, household, industry,
+  declared goals, preferred channel and risk profile), with source/status.
+- Current inferred and confirmed hypotheses, stored confirmations/rejections,
+  missing fields, and the relevant local service discussion topics.
+
+Names, customer/account/transaction identifiers, exact birth dates, raw
+transactions, counterparties, remittances, unrestricted occupation text and
+conversation/interaction history are excluded. Declarations are labelled as
+source assertions rather than independently verified facts. Missing or expired
+facts remain unknown. Banking permissions filter data before prompt construction;
+without balance permission, bank balances are unavailable. Product/profile
+context uses the existing separate personalization consent. The prototype does
+not add a separate consent record for external AI processing.
+
+The endpoint applies the existing `X-Demo-Token` check (when `DEMO_API_TOKEN`
+is set), checks customer existence and that customer's current personalization
+and banking consent, and scopes bank reads by both customer ownership and
+authorized accounts. A path ID cannot override these checks. **The shared demo
+token authorizes the presenter across all synthetic customers; it is not
+per-customer authentication.** With no token, this remains an open local demo.
+Production requires authenticated customer ownership checks, external-processing
+consent/governance, request throttling and cost controls.
+
+Requests use the official OpenAI SDK with Structured Outputs, `store=False`,
+a 30-second SDK timeout, no automatic retries and a 4,000 output-token cap.
+`store=False` disables Responses storage; it does not establish zero retention
+for every provider processing/logging policy. Errors return sanitized messages:
+401 invalid demo token, 403 missing consent/permissions, 404 unknown customer,
+503 missing key or provider rate limit, 504 timeout, 502 other provider errors,
+refusal, incomplete output, invalid schema or invalid references.
+
+Validation checks IDs, evidence/service references, confirmation flags and
+proposal-only actions. Prompt instructions prohibit unsupported facts, invented
+offers and revival of rejected hypotheses. Schema/reference checks cannot
+guarantee factual correctness of free-text explanations; generated guidance
+still needs review. The catalogue contains **demo discussion topics, not
+verified KBC partner offers, prices or eligibility**. This is an OpenAI
+integration, not an official Kate/KBC connector.
+
+Tests in `backend/tests/test_ai_analysis.py` mock OpenAI; no credentials, live
+calls or paid requests are required. Run `python -m pytest backend/tests -q`
+(or the bundled `.tools/python/python.exe`). Implementation follows the
+[official OpenAI Structured Outputs documentation](https://developers.openai.com/api/docs/guides/structured-outputs).
 
 ## Kate
 
